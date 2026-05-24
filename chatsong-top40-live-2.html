@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chatsong Chart Top 40</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:20px; }
+    h1 { text-align:center; margin-bottom:20px; }
+    .container { max-width:900px; margin:0 auto; }
+    .form-row { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+    .form-row input { flex:1; padding:8px; border-radius:4px; border:1px solid #444; background:#222; color:#fff; }
+    .submit-btn { padding:10px 20px; background:#e91e63; border:none; border-radius:4px; color:#fff; cursor:pointer; }
+    .submit-btn:hover { background:#ff2f7a; }
+    table { width:100%; border-collapse:collapse; margin-top:20px; }
+    th, td { padding:8px; border-bottom:1px solid #333; text-align:left; }
+    iframe { width:300px; height:150px; border-radius:8px; }
+    .delete-btn { padding:4px 10px; background:#f44336; border:none; border-radius:4px; color:#fff; cursor:pointer; }
+    .delete-btn:hover { background:#ff6659; }
+    .rank-1 { background:#ff9800; }
+    .rank-2 { background:#cd7f32; }
+    .rank-3 { background:#9e9e9e; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chatsong Chart Top 40</h1>
+
+    <!-- FORMULIER -->
+    <div id="form">
+      <div class="form-row">
+        <input id="artist" type="text" placeholder="Artiest" />
+        <input id="title" type="text" placeholder="Titel" />
+      </div>
+      <div class="form-row">
+        <input id="link" type="text" placeholder="YouTube / SoundCloud / Spotify / Deezer / Apple / Vimeo / Tidal link" />
+      </div>
+      <button class="submit-btn">Submit Track</button>
+    </div>
+
+    <!-- CHART -->
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Artiest</th>
+          <th>Titel</th>
+          <th>Player</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="chart"></tbody>
+    </table>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      databaseURL: "https://chatsong-chart-top-40-default-rtdb.europe-west1.firebasedatabase.app/"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const tracksRef = ref(db, "tracks");
+
+    const artistInput = document.querySelector("#artist");
+    const titleInput  = document.querySelector("#title");
+    const linkInput   = document.querySelector("#link");
+    const submitBtn   = document.querySelector(".submit-btn");
+    const chartBody   = document.querySelector("#chart");
+
+    // 🔹 Universele embed-functie
+    function buildPlayer(link) {
+      if (link.includes("youtube.com") || link.includes("youtu.be")) {
+        let id = "";
+        if (link.includes("watch?v=")) id = new URL(link).searchParams.get("v");
+        else if (link.includes("youtu.be/")) id = link.split("youtu.be/")[1].split(/[?&]/)[0];
+        return `https://www.youtube.com/embed/${id}`;
+      }
+      if (link.includes("soundcloud.com"))
+        return `https://w.soundcloud.com/player/?url=${encodeURIComponent(link)}&color=%23ff5500&auto_play=false`;
+      if (link.includes("open.spotify.com"))
+        return `https://open.spotify.com/embed/${link.split("spotify.com/")[1]}`;
+      if (link.includes("deezer.com"))
+        return `https://widget.deezer.com/widget/dark/${link}`;
+      if (link.includes("music.apple.com"))
+        return `https://embed.music.apple.com/${link.split("music.apple.com/")[1]}`;
+      if (link.includes("vimeo.com")) {
+        const id = link.split("vimeo.com/")[1];
+        return `https://player.vimeo.com/video/${id}`;
+      }
+      if (link.includes("tidal.com"))
+        return `https://embed.tidal.com/${link.split("tidal.com/")[1]}`;
+      return link;
+    }
+
+    // 🔹 Submit Track
+    submitBtn.addEventListener("click", () => {
+      const artist = artistInput.value.trim();
+      const title  = titleInput.value.trim();
+      const link   = linkInput.value.trim();
+      if (!artist || !title || !link) return alert("Vul alle velden in!");
+      push(tracksRef, { artist, title, link, createdAt: Date.now() });
+      artistInput.value = titleInput.value = linkInput.value = "";
+    });
+
+    // 🔹 Chart-weergave
+    onValue(tracksRef, snapshot => {
+      chartBody.innerHTML = "";
+      const rows = [];
+      snapshot.forEach(child => rows.push({ id: child.key, ...child.val() }));
+      rows.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+
+      rows.forEach((track, index) => {
+        const tr = document.createElement("tr");
+        if (index === 0) tr.classList.add("rank-1");
+        else if (index === 1) tr.classList.add("rank-2");
+        else if (index === 2) tr.classList.add("rank-3");
+
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${track.artist}</td>
+          <td>${track.title}</td>
+          <td><iframe src="${buildPlayer(track.link)}" frameborder="0" allow="autoplay; encrypted-media"></iframe></td>
+          <td><button class="delete-btn" onclick="remove(ref(db, 'tracks/${track.id}'))">Delete</button></td>
+        `;
+        chartBody.appendChild(tr);
+      });
+    });
+  </script>
+</body>
+</html>
