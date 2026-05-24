@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatsong Top 40 Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0b0b12;
+      color: #f5f5f5;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #151525;
+      border-bottom: 1px solid #333;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Formulier */
+    .submit-form {
+      background: #11111b;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+
+    .submit-form h2 {
+      margin-top: 0;
+      color: #fff;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #1e1e30;
+      color: #fff;
+    }
+
+    .platforms {
+      margin-top: 16px;
+    }
+
+    .platforms button {
+      margin: 4px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .soundcloud { background: #ff5500; }
+    .youtube { background: #ff0000; }
+    .spotify { background: #1db954; }
+    .bandcamp { background: #00a1b0; }
+    .deezer { background: #8b5cf6; }
+    .apple { background: #ff4f4f; }
+    .vimeo { background: #00aaff; }
+    .tidal { background: #000; }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      background: #ff7a1a;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    /* Chart */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #11111b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th, td {
+      padding: 10px 8px;
+      text-align: left;
+      font-size: 0.9rem;
+      vertical-align: top;
+    }
+
+    th {
+      background: #1e1e30;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:nth-child(even) td {
+      background: #151525;
+    }
+
+    tr:nth-child(odd) td {
+      background: #10101a;
+    }
+
+    .track-meta {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .track-artist {
+      color: #ffb347;
+    }
+
+    .track-title {
+      color: #ffffff;
+    }
+
+    .btn-delete {
+      background: #ff3b30;
+      border: none;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-delete:hover {
+      background: #e02a22;
+    }
+
+    iframe {
+      border-radius: 4px;
+      max-width: 100%;
+    }
+
+    @media (max-width: 800px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+      th, td {
+        font-size: 0.8rem;
+        padding: 8px 6px;
+      }
+      iframe {
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Chatsong Top 40 – Live</h1>
+    <p>Indie Music Chart — Community Powered</p>
+  </header>
+
+  <main>
+    <!-- FORMULIER -->
+    <section class="submit-form">
+      <h2>🎵 Submit Your Track</h2>
+      <label>Artist Name</label>
+      <input type="text" placeholder="Your artist name...">
+      <label>Track Title</label>
+      <input type="text" placeholder="Your track title...">
+      <label>Music Link</label>
+      <input type="text" placeholder="https://soundcloud.com/... or youtube.com/...">
+
+      <div class="platforms">
+        <button class="soundcloud">SoundCloud</button>
+        <button class="youtube">YouTube</button>
+        <button class="spotify">Spotify</button>
+        <button class="bandcamp">Bandcamp</button>
+        <button class="deezer">Deezer</button>
+        <button class="apple">Apple Music</button>
+        <button class="vimeo">Vimeo</button>
+        <button class="tidal">Tidal</button>
+      </div>
+
+      <button class="submit-btn">🚀 Submit Track</button>
+    </section>
+
+    <!-- CHART -->
+    <div class="table-wrapper">
+      <table id="chartTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Track Info</th>
+            <th>Player</th>
+            <th>Actie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <div class="track-meta">
+                <span class="track-artist">ChatsongMusic</span> – 
+                <span class="track-title">Fuerza en Ti</span>
+              </div>
+              <div>
+                <a href="https://soundcloud.com/chatsongmusic/fuerza-en-ti" target="_blank" style="color:#ffb347;">
+                  Open track op SoundCloud
+                </a>
+              </div>
+            </td>
+            <td>
+              <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chatsongmusic/fuerza-en-ti&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+              </iframe>
+            </td>
+            <td>
+              <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function deleteRow(button) {
+      if (!confirm('Deze track verwijderen uit de chart?')) return;
+      const row = button.closest('tr');
+      if (row) {
+        row.remove();
+        renumberRows();
+      }
+    }
+
+    function renumberRows() {
+      const table = document.getElementById('chartTable');
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach((row, index) => {
+        const cell = row.querySelector('td');
+        if (cell) cell.textContent = index + 1;
+      });
+    }
+  </script>
+</body>
+</html>
