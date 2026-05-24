@@ -18,16 +18,20 @@
   .container {
     max-width: 680px;
     margin: 0 auto;
-    padding: 0 16px 60px;
+    padding: 0 12px 60px;
   }
 
   /* HEADER */
   header {
     background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
-    padding: 30px 16px 24px;
+    padding: 20px 12px 16px;
     text-align: center;
     border-bottom: 3px solid #ff6b00;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+  }
+
+  @media (min-width: 480px) {
+    header { padding: 30px 16px 24px; margin-bottom: 24px; }
   }
 
   .header-inner { max-width: 680px; margin: 0 auto; }
@@ -36,54 +40,79 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
   }
 
-  .flame { font-size: 32px; }
+  @media (min-width: 480px) {
+    .logo-row { gap: 12px; }
+  }
+
+  .flame { font-size: 24px; }
+
+  @media (min-width: 480px) {
+    .flame { font-size: 32px; }
+  }
 
   h1 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
-    font-size: clamp(28px, 7vw, 48px);
+    font-size: clamp(24px, 6vw, 48px);
     color: #ff6b00;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     line-height: 1.1;
     text-transform: uppercase;
+  }
+
+  @media (min-width: 480px) {
+    h1 { letter-spacing: 2px; }
   }
 
   .tagline {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 11px;
     color: #ffffff;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-top: 8px;
+    margin-top: 6px;
     opacity: 0.9;
+  }
+
+  @media (min-width: 480px) {
+    .tagline { font-size: 13px; letter-spacing: 3px; margin-top: 8px; }
   }
 
   .live-pill {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
     background: #ff6b00;
     border-radius: 20px;
-    padding: 5px 16px;
+    padding: 4px 12px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 11px;
     color: #ffffff;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    margin-top: 12px;
+    margin-top: 8px;
+  }
+
+  @media (min-width: 480px) {
+    .live-pill { gap: 7px; padding: 5px 16px; font-size: 12px; letter-spacing: 1px; margin-top: 12px; }
   }
 
   .live-pill::before {
     content: '';
-    width: 7px; height: 7px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: #fff;
     animation: pulse 1.5s infinite;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 480px) {
+    .live-pill::before { width: 7px; height: 7px; }
   }
 
   @keyframes pulse {
@@ -94,58 +123,74 @@
   /* SUBMIT CARD */
   .submit-card {
     background: #ffffff;
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 28px;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  @media (min-width: 480px) {
+    .submit-card { border-radius: 16px; padding: 24px; margin-bottom: 28px; }
   }
 
   .submit-heading {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 16px;
     color: #1a1a2e;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
+  @media (min-width: 480px) {
+    .submit-heading { font-size: 18px; margin-bottom: 18px; }
+  }
+
   .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 12px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
   }
 
-  @media (max-width: 480px) {
-    .form-grid { grid-template-columns: 1fr; }
+  @media (min-width: 480px) {
+    .form-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
   }
 
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
   .form-group.full { grid-column: 1 / -1; }
 
   label {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 11px;
     color: #1a1a2e;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
+  @media (min-width: 480px) {
+    label { font-size: 12px; }
+  }
+
   input {
     background: #f4f4f8;
     border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 11px 14px;
+    border-radius: 6px;
+    padding: 9px 12px;
     color: #1a1a2e;
     font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     outline: none;
     transition: border-color 0.2s;
     width: 100%;
+  }
+
+  @media (min-width: 480px) {
+    input { border-radius: 8px; padding: 11px 14px; font-size: 14px; }
   }
 
   input:focus { border-color: #ff6b00; background: #fff; }
@@ -153,19 +198,29 @@
 
   .platforms {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
     margin-top: 6px;
+    margin-bottom: 12px;
+  }
+
+  @media (min-width: 480px) {
+    .platforms { gap: 8px; margin-bottom: 0; }
   }
 
   .plat {
-    padding: 3px 10px;
-    border-radius: 5px;
-    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
     font-weight: 700;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 480px) {
+    .plat { padding: 3px 10px; font-size: 11px; }
   }
 
   .plat-sc { background: #ff5500; color: #fff; }
@@ -179,19 +234,23 @@
 
   .submit-btn {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background: #ff6b00;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 16px;
-    letter-spacing: 2px;
+    font-size: 14px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
-    margin-top: 16px;
+    margin-top: 12px;
+  }
+
+  @media (min-width: 480px) {
+    .submit-btn { padding: 14px; font-size: 16px; letter-spacing: 2px; margin-top: 16px; }
   }
 
   .submit-btn:hover { background: #e55e00; }
@@ -199,13 +258,17 @@
   .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
 
   .form-msg {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    margin-top: 12px;
-    padding: 10px 14px;
-    border-radius: 8px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
     display: none;
     font-family: 'Montserrat', sans-serif;
+  }
+
+  @media (min-width: 480px) {
+    .form-msg { font-size: 13px; padding: 10px 14px; }
   }
 
   .form-msg.success { display: block; background: #d4f5e2; color: #1a7a3f; border: 1px solid #1db954; }
@@ -215,14 +278,18 @@
   .section-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
-    font-size: 18px;
+    font-size: 14px;
     color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+  }
+
+  @media (min-width: 480px) {
+    .section-title { font-size: 18px; letter-spacing: 2px; margin-bottom: 14px; }
   }
 
   .section-title::after {
@@ -237,18 +304,26 @@
   .loading {
     text-align: center;
     color: #ffffff;
-    padding: 40px;
+    padding: 30px 20px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
   }
 
+  @media (min-width: 480px) {
+    .loading { padding: 40px; }
+  }
+
   .spinner {
-    width: 32px; height: 32px;
+    width: 28px; height: 28px;
     border: 3px solid rgba(255,107,0,0.3);
     border-top-color: #ff6b00;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
-    margin: 0 auto 12px;
+    margin: 0 auto 10px;
+  }
+
+  @media (min-width: 480px) {
+    .spinner { width: 32px; height: 32px; margin-bottom: 12px; }
   }
 
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -256,24 +331,46 @@
   /* EMPTY */
   .empty {
     text-align: center;
-    padding: 50px 20px;
+    padding: 40px 16px;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
   }
 
-  .empty-icon { font-size: 52px; margin-bottom: 14px; }
-  .empty h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-  .empty p { font-size: 14px; opacity: 0.7; line-height: 1.6; }
+  @media (min-width: 480px) {
+    .empty { padding: 50px 20px; }
+  }
+
+  .empty-icon { font-size: 44px; margin-bottom: 12px; }
+
+  @media (min-width: 480px) {
+    .empty-icon { font-size: 52px; margin-bottom: 14px; }
+  }
+
+  .empty h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+
+  @media (min-width: 480px) {
+    .empty h3 { font-size: 18px; margin-bottom: 8px; }
+  }
+
+  .empty p { font-size: 13px; opacity: 0.7; line-height: 1.5; }
+
+  @media (min-width: 480px) {
+    .empty p { font-size: 14px; line-height: 1.6; }
+  }
 
   /* TRACK CARD */
   .track-card {
     background: #ffffff;
-    border-radius: 12px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(0,0,0,0.25);
     transition: transform 0.15s, box-shadow 0.15s;
     animation: slideIn 0.3s ease;
+  }
+
+  @media (min-width: 480px) {
+    .track-card { border-radius: 12px; margin-bottom: 10px; }
   }
 
   @keyframes slideIn {
@@ -282,36 +379,54 @@
   }
 
   .track-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
-  .track-card.top1 { border-left: 5px solid #ffd700; }
-  .track-card.top2 { border-left: 5px solid #c0c0c0; }
-  .track-card.top3 { border-left: 5px solid #cd7f32; }
+  .track-card.top1 { border-left: 4px solid #ffd700; }
+  .track-card.top2 { border-left: 4px solid #c0c0c0; }
+  .track-card.top3 { border-left: 4px solid #cd7f32; }
+
+  @media (min-width: 480px) {
+    .track-card.top1 { border-left: 5px solid #ffd700; }
+    .track-card.top2 { border-left: 5px solid #c0c0c0; }
+    .track-card.top3 { border-left: 5px solid #cd7f32; }
+  }
 
   .track-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
+    gap: 10px;
+    padding: 10px 12px;
     cursor: pointer;
+  }
+
+  @media (min-width: 480px) {
+    .track-header { gap: 12px; padding: 14px 16px; }
   }
 
   /* RANK */
   .rank {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
-    font-size: 16px;
-    min-width: 38px;
-    height: 38px;
-    border-radius: 8px;
+    font-size: 14px;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
 
+  @media (min-width: 480px) {
+    .rank { font-size: 16px; min-width: 38px; height: 38px; border-radius: 8px; }
+  }
+
   .rank-1 { background: #ffd700; color: #5a3e00; }
   .rank-2 { background: #c0c0c0; color: #333; }
   .rank-3 { background: #cd7f32; color: #fff; }
-  .rank-other { background: #1a1a2e; color: #ffffff; font-size: 14px; }
+  .rank-other { background: #1a1a2e; color: #ffffff; font-size: 12px; }
+
+  @media (min-width: 480px) {
+    .rank-other { font-size: 14px; }
+  }
 
   /* TRACK INFO */
   .track-info { flex: 1; min-width: 0; }
@@ -319,31 +434,47 @@
   .track-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 13px;
     color: #1a1a2e;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
+  @media (min-width: 480px) {
+    .track-title { font-size: 15px; }
+  }
+
   .track-meta {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 3px;
-    font-size: 12px;
+    gap: 4px;
+    margin-top: 2px;
+    font-size: 11px;
     color: #666;
     font-weight: 600;
     flex-wrap: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (min-width: 480px) {
+    .track-meta { gap: 6px; margin-top: 3px; font-size: 12px; }
   }
 
   .pbadge {
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 9px;
     font-weight: 700;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 480px) {
+    .pbadge { padding: 2px 7px; border-radius: 4px; font-size: 10px; }
   }
 
   .pbadge-sc { background: #ff5500; color: #fff; }
@@ -359,8 +490,12 @@
   /* VOTE & DELETE */
   .action-buttons {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-shrink: 0;
+  }
+
+  @media (min-width: 480px) {
+    .action-buttons { gap: 8px; }
   }
 
   .vote-btn {
@@ -370,13 +505,18 @@
     gap: 1px;
     background: #f4f4f8;
     border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 6px 12px;
+    border-radius: 6px;
+    padding: 5px 8px;
     cursor: pointer;
     color: #666;
     transition: all 0.2s;
     flex-shrink: 0;
-    min-width: 52px;
+    min-width: 44px;
+    font-size: 11px;
+  }
+
+  @media (min-width: 480px) {
+    .vote-btn { border-radius: 8px; padding: 6px 12px; min-width: 52px; font-size: 12px; }
   }
 
   .vote-btn:hover:not(.voted) {
@@ -391,26 +531,40 @@
     color: #ffffff;
   }
 
-  .vote-arrow { font-size: 16px; line-height: 1; }
+  .vote-arrow { font-size: 13px; line-height: 1; }
+
+  @media (min-width: 480px) {
+    .vote-arrow { font-size: 16px; }
+  }
 
   .vote-count {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 14px;
+    font-size: 12px;
+  }
+
+  @media (min-width: 480px) {
+    .vote-count { font-size: 14px; }
   }
 
   .delete-btn {
     background: #f44336;
     border: none;
-    border-radius: 8px;
-    padding: 6px 12px;
+    border-radius: 6px;
+    padding: 5px 8px;
     color: #fff;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 10px;
     text-transform: uppercase;
     transition: background 0.2s;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 480px) {
+    .delete-btn { border-radius: 8px; padding: 6px 12px; font-size: 12px; }
   }
 
   .delete-btn:hover { background: #d32f2f; }
@@ -418,9 +572,13 @@
   /* CHEVRON */
   .chevron {
     color: #999;
-    font-size: 18px;
+    font-size: 16px;
     transition: transform 0.3s;
     flex-shrink: 0;
+  }
+
+  @media (min-width: 480px) {
+    .chevron { font-size: 18px; }
   }
 
   .track-card.open .chevron { transform: rotate(180deg); }
@@ -433,51 +591,70 @@
     background: #f8f8f8;
   }
 
-  .track-card.open .player-wrap { max-height: 300px; }
+  .track-card.open .player-wrap { max-height: 350px; }
   .player-wrap iframe { width: 100%; border: none; display: block; }
 
   .player-error {
-    padding: 16px;
+    padding: 12px;
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
     color: #666;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
+  }
+
+  @media (min-width: 480px) {
+    .player-error { padding: 16px; font-size: 13px; }
   }
 
   .player-error a { color: #ff6b00; text-decoration: none; }
 
   /* SUBMITTER */
   .submitter-info {
-    padding: 0 16px 12px;
-    font-size: 12px;
+    padding: 0 12px 8px;
+    font-size: 11px;
     color: #999;
     font-family: 'Montserrat', sans-serif;
+  }
+
+  @media (min-width: 480px) {
+    .submitter-info { padding: 0 16px 12px; font-size: 12px; }
   }
 
   .submitter-badge {
     display: inline-block;
     background: #f0f0f0;
     color: #666;
-    padding: 3px 8px;
-    border-radius: 4px;
-    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 4px;
+    font-size: 10px;
+  }
+
+  @media (min-width: 480px) {
+    .submitter-badge { padding: 3px 8px; margin-left: 6px; font-size: 11px; }
   }
 
   /* FOOTER */
   footer {
     text-align: center;
     color: rgba(255,255,255,0.6);
-    font-size: 12px;
-    margin-top: 40px;
-    padding-top: 20px;
+    font-size: 11px;
+    margin-top: 30px;
+    padding-top: 16px;
     border-top: 1px solid rgba(255,107,0,0.3);
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+  }
+
+  @media (min-width: 480px) {
+    footer { font-size: 12px; margin-top: 40px; padding-top: 20px; letter-spacing: 1px; }
   }
 
   footer span { color: #ff6b00; }
+
+  footer p { margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -489,7 +666,7 @@
       <h1>ChatSong Top 40</h1>
       <span class="flame">🔥</span>
     </div>
-    <p class="tagline">Indie Music Chart — Community Powered</p>
+    <p class="tagline">Indie Music Chart</p>
     <div class="live-pill">Live Voting</div>
   </div>
 </header>
@@ -520,31 +697,31 @@
       </div>
     </div>
     <div class="platforms">
-      <span class="plat plat-sc">☁ SoundCloud</span>
-      <span class="plat plat-yt">▶ YouTube</span>
-      <span class="plat plat-sp">♪ Spotify</span>
-      <span class="plat plat-bc">🎵 Bandcamp</span>
-      <span class="plat plat-dz">🎶 Deezer</span>
-      <span class="plat plat-am">🍎 Apple Music</span>
-      <span class="plat plat-vm">📹 Vimeo</span>
-      <span class="plat plat-tw">🎵 Tidal</span>
+      <span class="plat plat-sc">☁ SC</span>
+      <span class="plat plat-yt">▶ YT</span>
+      <span class="plat plat-sp">♪ Sp</span>
+      <span class="plat plat-bc">🎵 BC</span>
+      <span class="plat plat-dz">🎶 DZ</span>
+      <span class="plat plat-am">🍎 AM</span>
+      <span class="plat plat-vm">📹 VM</span>
+      <span class="plat plat-tw">🎵 TL</span>
     </div>
-    <button class="submit-btn" id="submit-btn" onclick="submitTrack()">🚀 Submit Track</button>
+    <button class="submit-btn" id="submit-btn" onclick="submitTrack()">🚀 Submit</button>
     <div class="form-msg" id="form-msg"></div>
   </div>
 
-  <div class="section-title">🔥 Current Standings</div>
+  <div class="section-title">🔥 Chart</div>
 
   <div id="chart">
     <div class="loading">
       <div class="spinner"></div>
-      Loading chart...
+      Loading...
     </div>
   </div>
 
   <footer>
-    <p>ChatSong Top 40 · <span>community.chatsong.nl</span></p>
-    <p style="margin-top:6px;opacity:0.5">Support indie music 🎵</p>
+    <p>ChatSong Top 40</p>
+    <p style="opacity:0.5">Community Powered 🎵</p>
   </footer>
 </div>
 
@@ -588,8 +765,7 @@ function getEmbedUrl(url, platform) {
       return m ? `https://widget.deezer.com/widget/dark/${m[1]}/${m[2]}` : null;
     }
     if (platform === 'apple') {
-      const embedUrl = url.replace('music.apple.com', 'embed.music.apple.com');
-      return embedUrl;
+      return url.replace('music.apple.com', 'embed.music.apple.com');
     }
     if (platform === 'vimeo') {
       const m = url.match(/vimeo\.com\/(\d+)/);
@@ -600,25 +776,25 @@ function getEmbedUrl(url, platform) {
 }
 
 function getHeight(platform) {
-  if (platform === 'youtube') return 200;
-  if (platform === 'spotify') return 152;
-  if (platform === 'deezer') return 150;
-  if (platform === 'apple') return 150;
-  if (platform === 'vimeo') return 200;
-  return 180;
+  if (platform === 'youtube') return 180;
+  if (platform === 'spotify') return 130;
+  if (platform === 'deezer') return 130;
+  if (platform === 'apple') return 130;
+  if (platform === 'vimeo') return 180;
+  return 150;
 }
 
 function getPlatformBadge(platform) {
   const map = {
-    soundcloud: `<span class="pbadge pbadge-sc">☁ SoundCloud</span>`,
-    youtube:    `<span class="pbadge pbadge-yt">▶ YouTube</span>`,
-    spotify:    `<span class="pbadge pbadge-sp">♪ Spotify</span>`,
-    bandcamp:   `<span class="pbadge pbadge-bc">🎵 Bandcamp</span>`,
-    deezer:     `<span class="pbadge pbadge-dz">🎶 Deezer</span>`,
-    apple:      `<span class="pbadge pbadge-am">🍎 Apple Music</span>`,
-    vimeo:      `<span class="pbadge pbadge-vm">📹 Vimeo</span>`,
-    tidal:      `<span class="pbadge pbadge-tw">🎵 Tidal</span>`,
-    other:      `<span class="pbadge pbadge-other">♫ Music</span>`
+    soundcloud: `<span class="pbadge pbadge-sc">SC</span>`,
+    youtube:    `<span class="pbadge pbadge-yt">YT</span>`,
+    spotify:    `<span class="pbadge pbadge-sp">SP</span>`,
+    bandcamp:   `<span class="pbadge pbadge-bc">BC</span>`,
+    deezer:     `<span class="pbadge pbadge-dz">DZ</span>`,
+    apple:      `<span class="pbadge pbadge-am">AM</span>`,
+    vimeo:      `<span class="pbadge pbadge-vm">VM</span>`,
+    tidal:      `<span class="pbadge pbadge-tw">TL</span>`,
+    other:      `<span class="pbadge pbadge-other">♫</span>`
   };
   return map[platform] || map.other;
 }
@@ -655,7 +831,7 @@ async function loadTracks() {
       <div class="empty">
         <div class="empty-icon">⚠️</div>
         <h3>Connection failed</h3>
-        <p>Check your internet connection and try again.</p>
+        <p>Check internet & try again</p>
       </div>`;
   }
 }
@@ -671,7 +847,7 @@ function renderChart() {
       <div class="empty">
         <div class="empty-icon">🎵</div>
         <h3>No tracks yet!</h3>
-        <p>Be the first to submit your track.<br>Share your music with the ChatSong community.</p>
+        <p>Be the first to submit your track</p>
       </div>`;
     return;
   }
@@ -690,7 +866,7 @@ function renderChart() {
     const playerHtml = isOpen
       ? (embedUrl
           ? `<iframe src="${embedUrl}" height="${h}" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>`
-          : `<div class="player-error">Player not available · <a href="${esc(t.url)}" target="_blank">Open on platform ↗</a></div>`)
+          : `<div class="player-error">Player unavailable · <a href="${esc(t.url)}" target="_blank">Open ↗</a></div>`)
       : '';
 
     return `
@@ -700,7 +876,7 @@ function renderChart() {
           <div class="track-info">
             <div class="track-title">${esc(t.title)}</div>
             <div class="track-meta">
-              <span>${esc(t.artist)}</span>·
+              <span>${esc(t.artist)}</span>
               ${getPlatformBadge(platform)}
             </div>
           </div>
@@ -709,12 +885,12 @@ function renderChart() {
               <span class="vote-arrow">▲</span>
               <span class="vote-count">${t.votes||0}</span>
             </button>
-            <button class="delete-btn" onclick="deleteTrack(event,'${t.id}')">✕ DEL</button>
+            <button class="delete-btn" onclick="deleteTrack(event,'${t.id}')">✕</button>
           </div>
           <span class="chevron">⌄</span>
         </div>
         <div class="submitter-info">
-          Submitted by <span class="submitter-badge">${esc(submitter)}</span>
+          by <span class="submitter-badge">${esc(submitter)}</span>
         </div>
         <div class="player-wrap">${playerHtml}</div>
       </div>`;
@@ -741,14 +917,14 @@ async function vote(e, id) {
 
 async function deleteTrack(e, id) {
   e.stopPropagation();
-  if (confirm('Delete this track? This cannot be undone.')) {
+  if (confirm('Delete track?')) {
     try {
       await fbDelete(`tracks/${id}`);
       delete tracks[id];
       renderChart();
-      showMsg('success', '✅ Track deleted!');
+      showMsg('success', '✅ Deleted!');
     } catch(e) {
-      showMsg('error', '❌ Failed to delete track.');
+      showMsg('error', '❌ Failed');
     }
   }
 }
@@ -760,12 +936,12 @@ async function submitTrack() {
   const url = document.getElementById('inp-url').value.trim();
   const btn = document.getElementById('submit-btn');
 
-  if (!artist || !title || !url) { showMsg('error','⚠️ Please fill in all fields!'); return; }
-  if (!url.startsWith('http')) { showMsg('error','⚠️ Please enter a valid URL starting with https://'); return; }
-  if (Object.values(tracks).some(t => t.url === url)) { showMsg('error','⚠️ This track is already in the chart!'); return; }
+  if (!artist || !title || !url) { showMsg('error','⚠️ Fill all fields!'); return; }
+  if (!url.startsWith('http')) { showMsg('error','⚠️ Valid URL needed!'); return; }
+  if (Object.values(tracks).some(t => t.url === url)) { showMsg('error','⚠️ Already added!'); return; }
 
   btn.disabled = true;
-  btn.textContent = 'Submitting...';
+  btn.textContent = 'Sending...';
 
   try {
     const platform = detectPlatform(url);
@@ -775,14 +951,14 @@ async function submitTrack() {
     document.getElementById('inp-title').value = '';
     document.getElementById('inp-name').value = '';
     document.getElementById('inp-url').value = '';
-    showMsg('success', `✅ "${title}" has been added to the chart!`);
+    showMsg('success', `✅ Added!`);
     renderChart();
   } catch(e) {
-    showMsg('error','❌ Something went wrong. Please try again.');
+    showMsg('error','❌ Try again');
   }
 
   btn.disabled = false;
-  btn.textContent = '🚀 Submit Track';
+  btn.textContent = '🚀 Submit';
 }
 
 function showMsg(type, text) {
