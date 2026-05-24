@@ -59,19 +59,11 @@
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-    // ✅ JE JUISTE FIREBASE CONFIG
     const firebaseConfig = {
-      apiKey: "AIzaSyBW6pT-3tTiXcrJ0UxyVYgGWpyATQGUzqU",
-      authDomain: "chatsong-chart-top-40.firebaseapp.com",
-      databaseURL: "https://chatsong-chart-top-40-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "chatsong-chart-top-40",
-      storageBucket: "chatsong-chart-top-40.firebasestorage.app",
-      messagingSenderId: "349006039145",
-      appId: "1:349006039145:web:bbda90347fbc0dbea53af8",
-      measurementId: "G-089HJ1ZVK0"
+      databaseURL: "https://chatsong-chart-top-40-default-rtdb.europe-west1.firebasedatabase.app/"
     };
 
     const app = initializeApp(firebaseConfig);
