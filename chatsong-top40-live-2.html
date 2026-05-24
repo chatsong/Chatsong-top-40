@@ -10,8 +10,9 @@
     .container { max-width:900px; margin:0 auto; }
     .form-row { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
     .form-row input { flex:1; padding:8px; border-radius:4px; border:1px solid #444; background:#222; color:#fff; }
-    .submit-btn { padding:10px 20px; background:#e91e63; border:none; border-radius:4px; color:#fff; cursor:pointer; }
+    .submit-btn { padding:10px 20px; background:#e91e63; border:none; border-radius:4px; color:#fff; cursor:pointer; font-size:16px; }
     .submit-btn:hover { background:#ff2f7a; }
+    .submit-btn:disabled { background:#999; cursor:not-allowed; }
     table { width:100%; border-collapse:collapse; margin-top:20px; }
     th, td { padding:8px; border-bottom:1px solid #333; text-align:left; }
     iframe { width:300px; height:150px; border-radius:8px; }
@@ -20,6 +21,9 @@
     .rank-1 { background:#ff9800; }
     .rank-2 { background:#cd7f32; }
     .rank-3 { background:#9e9e9e; }
+    .status-msg { margin-top:10px; padding:10px; border-radius:4px; text-align:center; }
+    .status-msg.success { background:#4caf50; }
+    .status-msg.error { background:#f44336; }
   </style>
 </head>
 <body>
@@ -35,7 +39,8 @@
       <div class="form-row">
         <input id="link" type="text" placeholder="YouTube / SoundCloud / Spotify / Deezer / Apple / Vimeo / Tidal link" />
       </div>
-      <button class="submit-btn">Submit Track</button>
+      <button class="submit-btn" id="submitBtn">Submit Track</button>
+      <div id="statusMsg"></div>
     </div>
 
     <!-- CHART -->
@@ -68,8 +73,15 @@
     const artistInput = document.querySelector("#artist");
     const titleInput  = document.querySelector("#title");
     const linkInput   = document.querySelector("#link");
-    const submitBtn   = document.querySelector(".submit-btn");
+    const submitBtn   = document.querySelector("#submitBtn");
     const chartBody   = document.querySelector("#chart");
+    const statusMsg   = document.querySelector("#statusMsg");
+
+    function showMessage(text, type) {
+      statusMsg.textContent = text;
+      statusMsg.className = `status-msg ${type}`;
+      setTimeout(() => statusMsg.className = '', 3000);
+    }
 
     // 🔹 Universele embed-functie
     function buildPlayer(link) {
@@ -107,6 +119,7 @@
     // 🔹 Delete functie
     function deleteTrack(trackId) {
       remove(ref(db, `tracks/${trackId}`));
+      showMessage("Nummer verwijderd!", "success");
     }
 
     // 🔹 Submit Track
@@ -114,9 +127,32 @@
       const artist = artistInput.value.trim();
       const title  = titleInput.value.trim();
       const link   = linkInput.value.trim();
-      if (!artist || !title || !link) return alert("Vul alle velden in!");
-      push(tracksRef, { artist, title, link, createdAt: Date.now() });
-      artistInput.value = titleInput.value = linkInput.value = "";
+
+      if (!artist || !title || !link) {
+        showMessage("Vul alle velden in!", "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      showMessage("Bezig met uploaden...", "");
+
+      try {
+        push(tracksRef, { artist, title, link, createdAt: Date.now() })
+          .then(() => {
+            showMessage("✓ Nummer toegevoegd!", "success");
+            artistInput.value = titleInput.value = linkInput.value = "";
+            submitBtn.disabled = false;
+          })
+          .catch(error => {
+            console.error("Firebase error:", error);
+            showMessage("Fout bij uploaden: " + error.message, "error");
+            submitBtn.disabled = false;
+          });
+      } catch (error) {
+        console.error("Error:", error);
+        showMessage("Fout: " + error.message, "error");
+        submitBtn.disabled = false;
+      }
     }
 
     submitBtn.addEventListener("click", submitTrack);
@@ -151,6 +187,9 @@
         `;
         chartBody.appendChild(tr);
       });
+    }, error => {
+      console.error("Database error:", error);
+      showMessage("Fout bij laden van gegevens", "error");
     });
 
     // Maak deleteTrack globaal beschikbaar
