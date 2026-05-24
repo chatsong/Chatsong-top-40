@@ -81,29 +81,51 @@
       }
       if (link.includes("soundcloud.com"))
         return `https://w.soundcloud.com/player/?url=${encodeURIComponent(link)}&color=%23ff5500&auto_play=false`;
-      if (link.includes("open.spotify.com"))
-        return `https://open.spotify.com/embed/${link.split("spotify.com/")[1]}`;
-      if (link.includes("deezer.com"))
-        return `https://widget.deezer.com/widget/dark/${link}`;
-      if (link.includes("music.apple.com"))
-        return `https://embed.music.apple.com/${link.split("music.apple.com/")[1]}`;
+      if (link.includes("open.spotify.com")) {
+        const id = link.split("/").pop().split("?")[0];
+        return `https://open.spotify.com/embed/track/${id}`;
+      }
+      if (link.includes("deezer.com")) {
+        const id = link.split("/").pop().split("?")[0];
+        return `https://www.deezer.com/plugins/player?format=square&autoplay=false&playlist=false&width=300&height=150&color=007FEB&layout=dark&size=medium&type=tracks&id=${id}`;
+      }
+      if (link.includes("music.apple.com")) {
+        const id = link.split("/").pop().split("?")[0];
+        return `https://embed.music.apple.com/nl/album/${id}`;
+      }
       if (link.includes("vimeo.com")) {
-        const id = link.split("vimeo.com/")[1];
+        const id = link.split("vimeo.com/")[1].split("?")[0];
         return `https://player.vimeo.com/video/${id}`;
       }
-      if (link.includes("tidal.com"))
-        return `https://embed.tidal.com/${link.split("tidal.com/")[1]}`;
+      if (link.includes("tidal.com")) {
+        const id = link.split("/").pop().split("?")[0];
+        return `https://embed.tidal.com/tracks/${id}`;
+      }
       return link;
     }
 
+    // 🔹 Delete functie
+    function deleteTrack(trackId) {
+      remove(ref(db, `tracks/${trackId}`));
+    }
+
     // 🔹 Submit Track
-    submitBtn.addEventListener("click", () => {
+    function submitTrack() {
       const artist = artistInput.value.trim();
       const title  = titleInput.value.trim();
       const link   = linkInput.value.trim();
       if (!artist || !title || !link) return alert("Vul alle velden in!");
       push(tracksRef, { artist, title, link, createdAt: Date.now() });
       artistInput.value = titleInput.value = linkInput.value = "";
+    }
+
+    submitBtn.addEventListener("click", submitTrack);
+    
+    // 🔹 Enter-key support
+    [artistInput, titleInput, linkInput].forEach(input => {
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") submitTrack();
+      });
     });
 
     // 🔹 Chart-weergave
@@ -111,7 +133,8 @@
       chartBody.innerHTML = "";
       const rows = [];
       snapshot.forEach(child => rows.push({ id: child.key, ...child.val() }));
-      rows.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+      // AFLOPEND sorteren (nieuwste eerst)
+      rows.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
       rows.forEach((track, index) => {
         const tr = document.createElement("tr");
@@ -124,11 +147,14 @@
           <td>${track.artist}</td>
           <td>${track.title}</td>
           <td><iframe src="${buildPlayer(track.link)}" frameborder="0" allow="autoplay; encrypted-media"></iframe></td>
-          <td><button class="delete-btn" onclick="remove(ref(db, 'tracks/${track.id}'))">Delete</button></td>
+          <td><button class="delete-btn" onclick="window.deleteTrack('${track.id}')">Delete</button></td>
         `;
         chartBody.appendChild(tr);
       });
     });
+
+    // Maak deleteTrack globaal beschikbaar
+    window.deleteTrack = deleteTrack;
   </script>
 </body>
 </html>
