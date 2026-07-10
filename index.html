@@ -19,11 +19,8 @@
   .form-group { display: flex; flex-direction: column; gap: 4px; }
   label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; text-transform: uppercase; }
   input { background: #f4f4f8; border: 2px solid #ddd; border-radius: 6px; padding: 8px 10px; width: 100%; font-size: 12px; }
-  .platforms { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
-  .plat { padding: 2px 6px; border-radius: 3px; font-size: 9px; font-weight: 700; text-transform: uppercase; color: #fff; }
-  .plat-sc { background: #ff5500; } .plat-yt { background: #ff0000; } .plat-sp { background: #1db954; } 
   .submit-btn { width: 100%; padding: 10px; background: #ff6b00; border: none; border-radius: 6px; color: #ffffff; font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; cursor: pointer; }
-  .track-card { background: #ffffff; border-radius: 8px; margin-bottom: 8px; overflow: hidden; color: #1a1a2e; }
+  .track-card { background: #ffffff; border-radius: 8px; margin-bottom: 8px; overflow: hidden; color: #1a1a2e; transition: transform 0.2s; }
   .track-header { display: flex; align-items: center; gap: 8px; padding: 12px 10px; cursor: pointer; }
   .rank { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 12px; min-width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: #1a1a2e; color: #fff; }
   .track-title { font-weight: 700; font-size: 13px; }
@@ -31,7 +28,7 @@
   .player-wrap { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: #f0f0f0; }
   .track-card.open .player-wrap { max-height: 350px; padding: 10px; }
   .player-wrap iframe { width: 100%; border: none; display: block; }
-  .close-btn { width: 100%; padding: 8px; background: #333; color: #fff; border: none; border-radius: 4px; margin-top: 10px; cursor: pointer; font-size: 12px; }
+  .close-btn { width: 100%; padding: 8px; background: #ff6b00; color: #fff; border: none; border-radius: 4px; margin-top: 10px; cursor: pointer; font-size: 12px; font-weight: bold; }
   .delete-btn { background: #f44336; border: none; padding: 5px 8px; color: #fff; cursor: pointer; border-radius: 6px; font-size: 10px; }
 </style>
 </head>
@@ -51,6 +48,7 @@
       <div class="form-group"><label>Link</label><input type="url" id="inp-url" placeholder="https://..."></div>
     </div>
     <button class="submit-btn" id="submit-btn" onclick="submitTrack()">🚀 Submit</button>
+    <div id="form-msg" style="margin-top:10px; font-size:12px; font-weight:bold; display:none;"></div>
   </div>
   <div id="chart"></div>
 </div>
@@ -60,29 +58,23 @@ const DB_URL = 'https://chatsong-chart-top-40-default-rtdb.europe-west1.firebase
 let tracks = {};
 let openId = null;
 
-async function resolveSoundCloudUrl(url) {
+// DE 2026 FIX: Resolvers voor redirects (zoals on.soundcloud)
+async function resolveUrl(url) {
   if (!url.includes('on.soundcloud') && !url.includes('app.goo.gl')) return url;
   try {
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent('https://soundcloud.com/oembed?url=' + encodeURIComponent(url) + '&format=json')}`;
-    const r = await fetch(proxy);
-    const data = await r.json();
-    const json = JSON.parse(data.contents);
-    const match = json.html.match(/url=([^&"'\s]+)/);
-    return match ? decodeURIComponent(match[1]) : url;
+    // We gebruiken een proxy om de 'Location' header op te halen
+    const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, { mode: 'cors' });
+    const data = await response.json();
+    // Als de proxy faalt, return de originele url
+    return data.url || url; 
   } catch(e) { return url; }
 }
 
 function detectPlatform(url) {
   const u = url.toLowerCase();
-  if (u.includes('soundcloud.com') || u.includes('soundcloud.app.goo.gl') || u.includes('on.soundcloud.com')) return 'soundcloud';
+  if (u.includes('soundcloud.com')) return 'soundcloud';
   if (u.includes('youtube.com') || u.includes('youtu.be')) return 'youtube';
   if (u.includes('spotify.com')) return 'spotify';
-  if (u.includes('mixcloud.com')) return 'mixcloud';
-  if (u.includes('bandcamp.com')) return 'bandcamp';
-  if (u.includes('deezer.com')) return 'deezer';
-  if (u.includes('music.apple.com')) return 'apple';
-  if (u.includes('vimeo.com')) return 'vimeo';
-  if (u.includes('tidal.com')) return 'tidal';
   return 'other';
 }
 
@@ -96,21 +88,8 @@ function getEmbedUrl(url, platform) {
       return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff6b00&auto_play=true`;
     }
     if (platform === 'spotify') {
-      const m = url.match(/spotify\.com\/(track|album|playlist|episode)\/([a-zA-Z0-9]+)/);
-      return m ? `https://open.spotify.com/embed/${m[1]}/${m[2]}?utm_source=generator` : null;
-    }
-    if (platform === 'mixcloud') {
-      const parts = url.split('mixcloud.com');
-      if (parts[1]) return `https://www.mixcloud.com/widget/iframe/?feed=${encodeURIComponent(parts[1].split('?')[0])}&autoplay=1`;
-    }
-    if (platform === 'deezer') {
-      const m = url.match(/deezer\.com\/[a-z]*\/?(track|album|playlist)\/(\d+)/);
-      return m ? `https://widget.deezer.com/widget/dark/${m[1]}/${m[2]}?autoplay=true` : null;
-    }
-    if (platform === 'apple') return url.replace('music.apple.com', 'embed.music.apple.com');
-    if (platform === 'vimeo') {
-      const m = url.match(/vimeo\.com\/(\d+)/);
-      return m ? `https://player.vimeo.com/video/${m[1]}?autoplay=1` : null;
+      const m = url.match(/spotify\.com\/(track|album|playlist)\/([a-zA-Z0-9]+)/);
+      return m ? `https://open.spotify.com/embed/${m[1]}/${m[2]}` : null;
     }
   } catch(e) {}
   return null;
@@ -123,7 +102,7 @@ async function renderChart() {
     const isOpen = openId === t.id;
     const embedUrl = getEmbedUrl(t.url, t.platform);
     return `
-      <div class="track-card ${isOpen?'open':''}" id="card-${t.id}">
+      <div class="track-card ${isOpen?'open':''}">
         <div class="track-header" onclick="togglePlayer('${t.id}')">
           <div class="rank">#${i+1}</div>
           <div style="flex:1">
@@ -136,7 +115,7 @@ async function renderChart() {
           ${isOpen && embedUrl ? `
             <iframe src="${embedUrl}" height="250" allow="autoplay; encrypted-media"></iframe>
             <button class="close-btn" onclick="togglePlayer('${t.id}')">Close Player ✕</button>
-          ` : (isOpen ? `<p style="padding:10px; font-size:12px;">Link niet embedbaar. <a href="${t.url}" target="_blank">Open in nieuw venster</a></p><button class="close-btn" onclick="togglePlayer('${t.id}')">Close Player ✕</button>` : '')}
+          ` : (isOpen ? `<p style="padding:15px; font-size:12px;">Niet embedbaar op deze site. <a href="${t.url}" target="_blank">Klik hier om te luisteren ↗</a></p><button class="close-btn" onclick="togglePlayer('${t.id}')">Close ✕</button>` : '')}
         </div>
       </div>`;
   }).join('');
@@ -145,23 +124,36 @@ async function renderChart() {
 function togglePlayer(id) { openId = (openId === id) ? null : id; renderChart(); }
 
 async function submitTrack() {
+  const btn = document.getElementById('submit-btn');
   let url = document.getElementById('inp-url').value.trim();
-  let platform = detectPlatform(url);
-  if (platform === 'soundcloud') { url = await resolveSoundCloudUrl(url); }
+  
+  if (!url) return;
+  btn.disabled = true;
+  btn.textContent = 'Verwerken...';
+  
+  // DE 2026 FIX: URL Resolven
+  url = await resolveUrl(url);
   
   const data = { 
-    artist: document.getElementById('inp-artist').value, 
-    title: document.getElementById('inp-title').value, 
-    name: document.getElementById('inp-name').value, 
-    url, platform, votes: 0 
+    artist: document.getElementById('inp-artist').value || 'Onbekend', 
+    title: document.getElementById('inp-title').value || 'Onbekend', 
+    name: document.getElementById('inp-name').value || 'Anonymous', 
+    url: url, 
+    platform: detectPlatform(url), 
+    votes: 0 
   };
+  
   await fetch(`${DB_URL}/tracks.json`, { method:'POST', body: JSON.stringify(data) });
+  btn.disabled = false;
+  btn.textContent = '🚀 Submit';
   location.reload();
 }
 
 async function deleteTrack(id) {
-  await fetch(`${DB_URL}/tracks/${id}.json`, { method:'DELETE' });
-  location.reload();
+  if(confirm('Verwijderen?')) {
+    await fetch(`${DB_URL}/tracks/${id}.json`, { method:'DELETE' });
+    location.reload();
+  }
 }
 
 async function loadTracks() {
