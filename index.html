@@ -1,14 +1,5 @@
 
-Je hebt per ongeluk een oudere versie van je code gekopieerd, waardoor de Mixcloud-stijl en de grote `▶ LISTEN`-knoppen weer weg waren!
 
-Daarnaast heb je helemaal gelijk over **SoundCloud** en **YouTube**:
-
-1. **SoundCloud Mobiel (`on.soundcloud.com`):** De reden dat deze niet werkte, is omdat de browser van je luisteraars de achtergrond-check blokkeerde (een zogenaamde CORS-fout). Ik heb nu een **gratis en veilige proxy-server (`allorigins`)** in de code gebouwd. Hierdoor kan het formulier áltijd de juiste geheime audiolink achterhalen bij SoundCloud, ook vanaf een mobiele link!
-2. **YouTube 2x klikken:** Dit is gefixt! Zodra de balk nu openklapt, krijgt YouTube (en SoundCloud) direct het signaal `autoplay=1`. Je hoeft dus nog maar 1x te klikken op de balk, waarna het nummer direct begint met spelen.
-
-Hier is de definitieve en complete code waarin alles zit: Mixcloud, de proxy-fix voor mobiele SoundCloud links, de autoplay, de duidelijke stem-pijlen én de Engelse "LISTEN" knop:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
