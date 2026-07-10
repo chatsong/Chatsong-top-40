@@ -216,7 +216,7 @@
   }
 
   .plat-sc { background: #ff5500; color: #fff; }
-  .plat-mc { background: #00aee6; color: #fff; }
+  .plat-mc { background: #52aad8; color: #fff; }
   .plat-yt { background: #ff0000; color: #fff; }
   .plat-sp { background: #1db954; color: #fff; }
   .plat-bc { background: #1da0c3; color: #fff; }
@@ -449,70 +449,72 @@
     font-size: 11px;
     color: #666;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   @media (min-width: 480px) {
-    .track-artist { font-size: 12px; margin-bottom: 5px; }
+    .track-artist { font-size: 12px; margin-bottom: 8px; }
   }
 
   /* BUTTONS ROW */
   .buttons-row {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     align-items: center;
   }
 
-  @media (min-width: 480px) {
-    .buttons-row { gap: 8px; }
-  }
-
+  /* VOTE PILL DESIGN (DUIDELIJKE PIJLTJES) */
   .vote-btn {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 6px;
     background: #f4f4f8;
     border: 2px solid #ddd;
-    border-radius: 6px;
-    padding: 5px 8px;
+    border-radius: 20px;
+    padding: 4px 12px;
     cursor: pointer;
-    color: #666;
-    transition: all 0.2s;
+    color: #444;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    transition: all 0.2s ease;
     flex-shrink: 0;
-    min-width: 40px;
   }
 
   @media (min-width: 480px) {
-    .vote-btn { border-radius: 8px; padding: 6px 12px; min-width: 52px; }
+    .vote-btn { padding: 6px 16px; }
   }
 
   .vote-btn:hover:not(.voted) {
     border-color: #ff6b00;
     color: #ff6b00;
     background: #fff5ee;
+    transform: translateY(-1px);
   }
 
   .vote-btn.voted {
-    border-color: #ff6b00;
-    background: #ff6b00;
+    border-color: #2ecc71;
+    background: #2ecc71;
     color: #ffffff;
+    box-shadow: 0 2px 8px rgba(46,204,113,0.3);
   }
 
-  .vote-arrow { font-size: 12px; line-height: 1; }
+  .vote-arrow {
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    display: inline-block;
+  }
 
-  @media (min-width: 480px) {
-    .vote-arrow { font-size: 16px; }
+  .vote-btn:not(.voted) .vote-arrow {
+    color: #ff6b00;
   }
 
   .vote-count {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   @media (min-width: 480px) {
@@ -533,10 +535,13 @@
     transition: background 0.2s;
     flex-shrink: 0;
     white-space: nowrap;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
   }
 
   @media (min-width: 480px) {
-    .delete-btn { border-radius: 8px; padding: 6px 12px; font-size: 12px; }
+    .delete-btn { border-radius: 8px; padding: 6px 12px; font-size: 12px; height: 34px; }
   }
 
   .delete-btn:hover { background: #d32f2f; }
@@ -548,6 +553,7 @@
     transition: transform 0.3s;
     flex-shrink: 0;
     margin-left: auto;
+    align-self: center;
   }
 
   @media (min-width: 480px) {
@@ -708,7 +714,7 @@ let myVotes = JSON.parse(localStorage.getItem('cs40_votes') || '{}');
 function detectPlatform(url) {
   if (!url) return 'other';
   const u = url.toLowerCase();
-  if (u.includes('soundcloud.com') || u.includes('soundcloud.app.goo.gl') || u.includes('on.soundcloud.com')) return 'soundcloud';
+  if (u.includes('soundcloud.com') || u.includes('on.soundcloud.com')) return 'soundcloud';
   if (u.includes('mixcloud.com')) return 'mixcloud';
   if (u.includes('youtube.com') || u.includes('youtu.be')) return 'youtube';
   if (u.includes('spotify.com')) return 'spotify';
@@ -736,14 +742,10 @@ function getEmbedUrl(url, platform) {
       return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff6b00&auto_play=false&hide_related=true&show_comments=false`;
     }
     if (platform === 'mixcloud') {
-      const parts = url.split('mixcloud.com');
-      if (parts[1]) {
-        const path = parts[1].split('?')[0];
-        return `https://www.mixcloud.com/widget/iframe/?feed=${encodeURIComponent(path)}&hide_cover=1&mini=1`;
-      }
+      return `https://www.mixcloud.com/widget/iframe/?feed=${encodeURIComponent(url)}&hide_cover=1&light=1`;
     }
     if (platform === 'deezer') {
-      const m = url.match(/deezer\.com\/[a-z]*\/?(track|album|playlist)\/(\d+)/);
+      const m = url.match(/deezer\.com\/[a-z]+\/(track|album|playlist)\/(\d+)/);
       return m ? `https://widget.deezer.com/widget/dark/${m[1]}/${m[2]}` : null;
     }
     if (platform === 'apple') {
@@ -753,10 +755,6 @@ function getEmbedUrl(url, platform) {
       const m = url.match(/vimeo\.com\/(\d+)/);
       return m ? `https://player.vimeo.com/video/${m[1]}` : null;
     }
-    if (platform === 'tidal') {
-      const m = url.match(/tidal\.com\/(?:browse\/)?(track|album|playlist)\/(\d+)/);
-      return m ? `https://embed.tidal.com/${m[1]}s/${m[2]}` : null;
-    }
   } catch(e) {}
   return null;
 }
@@ -764,16 +762,15 @@ function getEmbedUrl(url, platform) {
 function getHeight(platform) {
   if (platform === 'youtube') return 160;
   if (platform === 'spotify') return 120;
+  if (platform === 'mixcloud') return 120;
   if (platform === 'deezer') return 120;
   if (platform === 'apple') return 120;
   if (platform === 'vimeo') return 160;
-  if (platform === 'mixcloud') return 120;
-  if (platform === 'tidal') return 120;
   return 140;
 }
 
 function esc(s) {
-  return String(s||'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 async function fbGet(path) {
@@ -802,4 +799,149 @@ async function loadTracks() {
   } catch(e) {
     document.getElementById('chart').innerHTML = `
       <div class="empty">
-        <div
+        <div class="empty-icon">⚠️</div>
+        <h3>Connection failed</h3>
+        <p>Check internet & try again</p>
+      </div>`;
+  }
+}
+
+function renderChart() {
+  const chart = document.getElementById('chart');
+  const sorted = Object.entries(tracks)
+    .map(([id,t]) => ({id,...t}))
+    .sort((a,b) => (b.votes||0)-(a.votes||0));
+
+  if (!sorted.length) {
+    chart.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🎵</div>
+        <h3>No tracks yet</h3>
+        <p>Be the first to submit!</p>
+      </div>`;
+    return;
+  }
+
+  chart.innerHTML = sorted.map((t, i) => {
+    const rank = i + 1;
+    const rc = rank<=3 ? `top${rank}` : '';
+    const rb = rank===1?'rank-1':rank===2?'rank-2':rank===3?'rank-3':'rank-other';
+    const isOpen = openId === t.id;
+    const voted = myVotes[t.id];
+    const platform = t.platform || detectPlatform(t.url);
+    const embedUrl = getEmbedUrl(t.url, platform);
+    const h = getHeight(platform);
+    const submitter = t.name || 'Anonymous';
+
+    const playerHtml = isOpen
+      ? (embedUrl
+          ? `<iframe src="${embedUrl}" height="${h}" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>`
+          : `<div class="player-error">Player unavailable · <a href="${esc(t.url)}" target="_blank">Open ↗</a></div>`)
+      : '';
+
+    return `
+      <div class="track-card ${rc} ${isOpen?'open':''}" id="card-${t.id}">
+        <div class="track-header" onclick="togglePlayer('${t.id}')">
+          <div class="rank ${rb}">#${rank}</div>
+          <div class="track-info">
+            <div class="track-title">${esc(t.title)}</div>
+            <div class="track-artist">${esc(t.artist)}</div>
+            <div class="buttons-row">
+              <button class="vote-btn ${voted?'voted':''}" onclick="vote(event,'${t.id}')">
+                <span class="vote-arrow">▲</span>
+                <span class="vote-count">${t.votes||0}</span>
+              </button>
+              <button class="delete-btn" onclick="deleteTrack(event,'${t.id}')">✕ DEL</button>
+            </div>
+          </div>
+          <span class="chevron">⌄</span>
+        </div>
+        <div class="submitter-info">by <span class="submitter-badge">${esc(submitter)}</span></div>
+        <div class="player-wrap">${playerHtml}</div>
+      </div>`;
+  }).join('');
+}
+
+function togglePlayer(id) {
+  openId = openId === id ? null : id;
+  renderChart();
+}
+
+async function vote(e, id) {
+  e.stopPropagation();
+  if (!tracks[id]) return;
+  const wasVoted = myVotes[id];
+  const current = tracks[id].votes || 0;
+  const newVotes = wasVoted ? current - 1 : current + 1;
+  tracks[id].votes = newVotes;
+  if (wasVoted) delete myVotes[id]; else myVotes[id] = 1;
+  localStorage.setItem('cs40_votes', JSON.stringify(myVotes));
+  renderChart();
+  try { await fbUpdate(`tracks/${id}`, { votes: newVotes }); } catch(e) {}
+}
+
+async function deleteTrack(e, id) {
+  e.stopPropagation();
+  if (confirm('Delete track?')) {
+    try {
+      await fbDelete(`tracks/${id}`);
+      delete tracks[id];
+      renderChart();
+      showMsg('success', '✅ Deleted!');
+    } catch(e) {
+      showMsg('error', '❌ Failed');
+    }
+  }
+}
+
+async function submitTrack() {
+  const artist = document.getElementById('inp-artist').value.trim();
+  const title = document.getElementById('inp-title').value.trim();
+  const name = document.getElementById('inp-name').value.trim();
+  const url = document.getElementById('inp-url').value.trim();
+  const btn = document.getElementById('submit-btn');
+
+  if (!artist || !title || !url) { showMsg('error','⚠️ Fill all fields!'); return; }
+  if (!url.startsWith('http')) { showMsg('error','⚠️ Valid URL needed!'); return; }
+  if (Object.values(tracks).some(t => t.url === url)) { showMsg('error','⚠️ Already added!'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    const platform = detectPlatform(url);
+    const result = await fbPush('tracks', { artist, title, name: name || 'Anonymous', url, platform, votes: 0, submitted: Date.now() });
+    tracks[result.name] = { artist, title, name: name || 'Anonymous', url, platform, votes: 0 };
+    document.getElementById('inp-artist').value = '';
+    document.getElementById('inp-title').value = '';
+    document.getElementById('inp-name').value = '';
+    document.getElementById('inp-url').value = '';
+    showMsg('success', `✅ Added!`);
+    renderChart();
+  } catch(e) {
+    showMsg('error','❌ Try again');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🚀 Submit';
+}
+
+function showMsg(type, text) {
+  const m = document.getElementById('form-msg');
+  m.className = `form-msg ${type}`;
+  m.textContent = text;
+  m.style.display = 'block';
+  setTimeout(() => { m.style.display='none'; }, 4000);
+}
+
+setInterval(async () => {
+  try {
+    const data = await fbGet('tracks');
+    if (data) { tracks = data; renderChart(); }
+  } catch(e) {}
+}, 15000);
+
+loadTracks();
+</script>
+</body>
+</html>
