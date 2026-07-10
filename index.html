@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,666 +8,116 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: #1a1a2e;
-    color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
-    min-height: 100vh;
-  }
-
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 12px 60px;
-  }
-
-  /* HEADER */
-  header {
-    background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
-    padding: 16px 12px 12px;
-    text-align: center;
-    border-bottom: 3px solid #ff6b00;
-    margin-bottom: 16px;
-  }
-
-  @media (min-width: 480px) {
-    header { padding: 30px 16px 24px; margin-bottom: 24px; }
-  }
-
+  body { background: #1a1a2e; color: #ffffff; font-family: 'Open Sans', sans-serif; min-height: 100vh; }
+  .container { max-width: 680px; margin: 0 auto; padding: 0 12px 60px; }
+  header { background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%); padding: 16px 12px 12px; text-align: center; border-bottom: 3px solid #ff6b00; margin-bottom: 16px; }
+  @media (min-width: 480px) { header { padding: 30px 16px 24px; margin-bottom: 24px; } }
   .header-inner { max-width: 680px; margin: 0 auto; }
-
-  .logo-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
+  .logo-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
   .flame { font-size: 24px; }
-
-  @media (min-width: 480px) {
-    .flame { font-size: 32px; }
-  }
-
-  h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 900;
-    font-size: clamp(22px, 5.5vw, 48px);
-    color: #ff6b00;
-    letter-spacing: 1px;
-    line-height: 1.1;
-    text-transform: uppercase;
-  }
-
-  @media (min-width: 480px) {
-    h1 { letter-spacing: 2px; }
-  }
-
-  .tagline {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 10px;
-    color: #ffffff;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-top: 4px;
-    opacity: 0.9;
-  }
-
-  @media (min-width: 480px) {
-    .tagline { font-size: 13px; letter-spacing: 3px; margin-top: 8px; }
-  }
-
-  .live-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: #ff6b00;
-    border-radius: 20px;
-    padding: 3px 10px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    color: #ffffff;
-    letter-spacing: 0px;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-
-  @media (min-width: 480px) {
-    .live-pill { gap: 7px; padding: 5px 16px; font-size: 12px; letter-spacing: 1px; margin-top: 12px; }
-  }
-
-  .live-pill::before {
-    content: '';
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: #fff;
-    animation: pulse 1.5s infinite;
-    flex-shrink: 0;
-  }
-
-  @media (min-width: 480px) {
-    .live-pill::before { width: 7px; height: 7px; }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* SUBMIT CARD */
-  .submit-card {
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-  }
-
-  @media (min-width: 480px) {
-    .submit-card { border-radius: 16px; padding: 24px; margin-bottom: 28px; }
-  }
-
-  .submit-heading {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
-    color: #1a1a2e;
-    margin-bottom: 12px;
-  }
-
-  @media (min-width: 480px) {
-    .submit-heading { font-size: 18px; margin-bottom: 18px; }
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-
-  @media (min-width: 480px) {
-    .form-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-  }
-
+  @media (min-width: 480px) { .flame { font-size: 32px; } }
+  h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(22px, 5.5vw, 48px); color: #ff6b00; letter-spacing: 1px; line-height: 1.1; text-transform: uppercase; }
+  @media (min-width: 480px) { h1 { letter-spacing: 2px; } }
+  .tagline { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 10px; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; opacity: 0.9; }
+  @media (min-width: 480px) { .tagline { font-size: 13px; letter-spacing: 3px; margin-top: 8px; } }
+  .live-pill { display: inline-flex; align-items: center; gap: 5px; background: #ff6b00; border-radius: 20px; padding: 3px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; color: #ffffff; letter-spacing: 0px; text-transform: uppercase; margin-top: 6px; }
+  @media (min-width: 480px) { .live-pill { gap: 7px; padding: 5px 16px; font-size: 12px; letter-spacing: 1px; margin-top: 12px; } }
+  .live-pill::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #fff; animation: pulse 1.5s infinite; flex-shrink: 0; }
+  @media (min-width: 480px) { .live-pill::before { width: 7px; height: 7px; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .submit-card { background: #ffffff; border-radius: 10px; padding: 14px; margin-bottom: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+  @media (min-width: 480px) { .submit-card { border-radius: 16px; padding: 24px; margin-bottom: 28px; } }
+  .submit-heading { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px; color: #1a1a2e; margin-bottom: 12px; }
+  @media (min-width: 480px) { .submit-heading { font-size: 18px; margin-bottom: 18px; } }
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 8px; }
+  @media (min-width: 480px) { .form-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; } }
   .form-group { display: flex; flex-direction: column; gap: 4px; }
   .form-group.full { grid-column: 1 / -1; }
-
-  label {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    color: #1a1a2e;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-
-  @media (min-width: 480px) {
-    label { font-size: 12px; }
-  }
-
-  input {
-    background: #f4f4f8;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    padding: 8px 10px;
-    color: #1a1a2e;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
-  }
-
-  @media (min-width: 480px) {
-    input { border-radius: 8px; padding: 11px 14px; font-size: 14px; }
-  }
-
+  label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; color: #1a1a2e; text-transform: uppercase; letter-spacing: 0.3px; }
+  @media (min-width: 480px) { label { font-size: 12px; } }
+  input { background: #f4f4f8; border: 2px solid #ddd; border-radius: 6px; padding: 8px 10px; color: #1a1a2e; font-family: 'Open Sans', sans-serif; font-size: 12px; font-weight: 600; outline: none; transition: border-color 0.2s; width: 100%; }
+  @media (min-width: 480px) { input { border-radius: 8px; padding: 11px 14px; font-size: 14px; } }
   input:focus { border-color: #ff6b00; background: #fff; }
   input::placeholder { color: #999; font-weight: 400; }
-
-  .platforms {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-
-  @media (min-width: 480px) {
-    .platforms { gap: 8px; margin-bottom: 0; }
-  }
-
-  .plat {
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 9px;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0px;
-    white-space: nowrap;
-  }
-
-  @media (min-width: 480px) {
-    .plat { padding: 3px 10px; font-size: 11px; }
-  }
-
-  .plat-sc { background: #ff5500; color: #fff; }
-  .plat-mc { background: #5000ff; color: #fff; }
-  .plat-yt { background: #ff0000; color: #fff; }
-  .plat-sp { background: #1db954; color: #fff; }
-  .plat-bc { background: #1da0c3; color: #fff; }
-  .plat-dz { background: #a238ff; color: #fff; }
-  .plat-am { background: #fc3c44; color: #fff; }
-  .plat-vm { background: #1ab7ea; color: #fff; }
-  .plat-tw { background: #000000; color: #fff; }
-
-  .submit-btn {
-    width: 100%;
-    padding: 10px;
-    background: #ff6b00;
-    border: none;
-    border-radius: 6px;
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    margin-top: 10px;
-  }
-
-  @media (min-width: 480px) {
-    .submit-btn { padding: 14px; font-size: 16px; letter-spacing: 2px; margin-top: 16px; }
-  }
-
+  .platforms { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+  @media (min-width: 480px) { .platforms { gap: 8px; margin-bottom: 0; } }
+  .plat { padding: 2px 6px; border-radius: 3px; font-size: 9px; font-weight: 700; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0px; white-space: nowrap; }
+  @media (min-width: 480px) { .plat { padding: 3px 10px; font-size: 11px; } }
+  .plat-sc { background: #ff5500; color: #fff; } .plat-mc { background: #5000ff; color: #fff; } .plat-yt { background: #ff0000; color: #fff; } .plat-sp { background: #1db954; color: #fff; } .plat-bc { background: #1da0c3; color: #fff; } .plat-dz { background: #a238ff; color: #fff; } .plat-am { background: #fc3c44; color: #fff; } .plat-vm { background: #1ab7ea; color: #fff; } .plat-tw { background: #000000; color: #fff; }
+  .submit-btn { width: 100%; padding: 10px; background: #ff6b00; border: none; border-radius: 6px; color: #ffffff; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-top: 10px; }
+  @media (min-width: 480px) { .submit-btn { padding: 14px; font-size: 16px; letter-spacing: 2px; margin-top: 16px; } }
   .submit-btn:hover { background: #e55e00; }
   .submit-btn:active { transform: scale(0.98); }
   .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
-
-  .form-msg {
-    font-size: 11px;
-    font-weight: 600;
-    margin-top: 8px;
-    padding: 7px 10px;
-    border-radius: 5px;
-    display: none;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  @media (min-width: 480px) {
-    .form-msg { font-size: 13px; padding: 10px 14px; }
-  }
-
+  .form-msg { font-size: 11px; font-weight: 600; margin-top: 8px; padding: 7px 10px; border-radius: 5px; display: none; font-family: 'Montserrat', sans-serif; }
+  @media (min-width: 480px) { .form-msg { font-size: 13px; padding: 10px 14px; } }
   .form-msg.success { display: block; background: #d4f5e2; color: #1a7a3f; border: 1px solid #1db954; }
   .form-msg.error { display: block; background: #fde8e8; color: #c0392b; border: 1px solid #e74c3c; }
-
-  /* SECTION TITLE */
-  .section-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 900;
-    font-size: 12px;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  @media (min-width: 480px) {
-    .section-title { font-size: 18px; letter-spacing: 2px; margin-bottom: 14px; }
-  }
-
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 2px;
-    background: #ff6b00;
-    opacity: 0.5;
-  }
-
-  /* LOADING */
-  .loading {
-    text-align: center;
-    color: #ffffff;
-    padding: 30px 16px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 12px;
-  }
-
-  @media (min-width: 480px) {
-    .loading { padding: 40px; font-size: 14px; }
-  }
-
-  .spinner {
-    width: 24px; height: 24px;
-    border: 3px solid rgba(255,107,0,0.3);
-    border-top-color: #ff6b00;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 8px;
-  }
-
-  @media (min-width: 480px) {
-    .spinner { width: 32px; height: 32px; margin-bottom: 12px; }
-  }
-
+  .section-title { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 12px; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  @media (min-width: 480px) { .section-title { font-size: 18px; letter-spacing: 2px; margin-bottom: 14px; } }
+  .section-title::after { content: ''; flex: 1; height: 2px; background: #ff6b00; opacity: 0.5; }
+  .loading { text-align: center; color: #ffffff; padding: 30px 16px; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 12px; }
+  @media (min-width: 480px) { .loading { padding: 40px; font-size: 14px; } }
+  .spinner { width: 24px; height: 24px; border: 3px solid rgba(255,107,0,0.3); border-top-color: #ff6b00; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 8px; }
+  @media (min-width: 480px) { .spinner { width: 32px; height: 32px; margin-bottom: 12px; } }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* EMPTY */
-  .empty {
-    text-align: center;
-    padding: 30px 16px;
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  @media (min-width: 480px) {
-    .empty { padding: 50px 20px; }
-  }
-
+  .empty { text-align: center; padding: 30px 16px; color: #ffffff; font-family: 'Montserrat', sans-serif; }
+  @media (min-width: 480px) { .empty { padding: 50px 20px; } }
   .empty-icon { font-size: 40px; margin-bottom: 10px; }
-
-  @media (min-width: 480px) {
-    .empty-icon { font-size: 52px; margin-bottom: 14px; }
-  }
-
+  @media (min-width: 480px) { .empty-icon { font-size: 52px; margin-bottom: 14px; } }
   .empty h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-
-  @media (min-width: 480px) {
-    .empty h3 { font-size: 18px; margin-bottom: 8px; }
-  }
-
+  @media (min-width: 480px) { .empty h3 { font-size: 18px; margin-bottom: 8px; } }
   .empty p { font-size: 12px; opacity: 0.7; line-height: 1.4; }
-
-  @media (min-width: 480px) {
-    .empty p { font-size: 14px; line-height: 1.6; }
-  }
-
-  /* TRACK CARD */
-  .track-card {
-    background: #ffffff;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: transform 0.15s, box-shadow 0.15s;
-    animation: slideIn 0.3s ease;
-  }
-
-  @media (min-width: 480px) {
-    .track-card { border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.25); }
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
+  @media (min-width: 480px) { .empty p { font-size: 14px; line-height: 1.6; } }
+  .track-card { background: #ffffff; border-radius: 8px; margin-bottom: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.15s, box-shadow 0.15s; animation: slideIn 0.3s ease; }
+  @media (min-width: 480px) { .track-card { border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.25); } }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .track-card:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
-  .track-card.top1 { border-left: 3px solid #ffd700; }
-  .track-card.top2 { border-left: 3px solid #c0c0c0; }
-  .track-card.top3 { border-left: 3px solid #cd7f32; }
-
-  @media (min-width: 480px) {
-    .track-card.top1 { border-left: 5px solid #ffd700; }
-    .track-card.top2 { border-left: 5px solid #c0c0c0; }
-    .track-card.top3 { border-left: 5px solid #cd7f32; }
-  }
-
-  /* TRACK HEADER */
-  .track-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 10px;
-    cursor: pointer;
-  }
-
-  @media (min-width: 480px) {
-    .track-header { gap: 14px; padding: 16px; }
-  }
-
-  /* RANK */
-  .rank {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 900;
-    font-size: 12px;
-    min-width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    padding-top: 2px;
-  }
-
-  @media (min-width: 480px) {
-    .rank { font-size: 16px; min-width: 38px; height: 38px; border-radius: 8px; }
-  }
-
-  .rank-1 { background: #ffd700; color: #5a3e00; }
-  .rank-2 { background: #c0c0c0; color: #333; }
-  .rank-3 { background: #cd7f32; color: #fff; }
-  .rank-other { background: #1a1a2e; color: #ffffff; font-size: 11px; }
-
-  @media (min-width: 480px) {
-    .rank-other { font-size: 14px; }
-  }
-
-  /* TRACK INFO */
+  .track-card.top1 { border-left: 3px solid #ffd700; } .track-card.top2 { border-left: 3px solid #c0c0c0; } .track-card.top3 { border-left: 3px solid #cd7f32; }
+  @media (min-width: 480px) { .track-card.top1 { border-left: 5px solid #ffd700; } .track-card.top2 { border-left: 5px solid #c0c0c0; } .track-card.top3 { border-left: 5px solid #cd7f32; } }
+  .track-header { display: flex; align-items: center; gap: 8px; padding: 12px 10px; cursor: pointer; }
+  @media (min-width: 480px) { .track-header { gap: 14px; padding: 16px; } }
+  .rank { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 12px; min-width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding-top: 2px; }
+  @media (min-width: 480px) { .rank { font-size: 16px; min-width: 38px; height: 38px; border-radius: 8px; } }
+  .rank-1 { background: #ffd700; color: #5a3e00; } .rank-2 { background: #c0c0c0; color: #333; } .rank-3 { background: #cd7f32; color: #fff; } .rank-other { background: #1a1a2e; color: #ffffff; font-size: 11px; }
+  @media (min-width: 480px) { .rank-other { font-size: 14px; } }
   .track-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-
-  .track-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    color: #1a1a2e;
-    line-height: 1.2;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  @media (min-width: 480px) {
-    .track-title { font-size: 15px; }
-  }
-
-  .track-artist {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 11px;
-    color: #555;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  @media (min-width: 480px) {
-    .track-artist { font-size: 13px; }
-  }
-
-  /* BUTTONS ROW (MODERN PILL DESIGN WITH CLEAR ARROWS) */
-  .buttons-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-top: 4px;
-  }
-
-  @media (min-width: 480px) {
-    .buttons-row { margin-top: 6px; }
-  }
-
-  .vote-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background: #f4f4f8;
-    border: 2px solid #ddd;
-    border-radius: 20px;
-    padding: 4px 12px;
-    cursor: pointer;
-    color: #444;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-  }
-
-  @media (min-width: 480px) {
-    .vote-btn { padding: 6px 16px; }
-  }
-
-  .vote-btn:hover:not(.voted) {
-    border-color: #ff6b00;
-    color: #ff6b00;
-    background: #fff5ee;
-  }
-
-  .vote-btn.voted {
-    border-color: #2ecc71;
-    background: #2ecc71;
-    color: #ffffff;
-    box-shadow: 0 2px 8px rgba(46,204,113,0.3);
-  }
-
-  .vote-arrow {
-    font-size: 16px;
-    font-weight: 900;
-    line-height: 1;
-    display: inline-block;
-  }
-
+  .track-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: #1a1a2e; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  @media (min-width: 480px) { .track-title { font-size: 15px; } }
+  .track-artist { font-family: 'Open Sans', sans-serif; font-size: 11px; color: #555; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (min-width: 480px) { .track-artist { font-size: 13px; } }
+  .buttons-row { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+  @media (min-width: 480px) { .buttons-row { margin-top: 6px; } }
+  .vote-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: #f4f4f8; border: 2px solid #ddd; border-radius: 20px; padding: 4px 12px; cursor: pointer; color: #444; font-family: 'Montserrat', sans-serif; font-weight: 800; transition: all 0.2s ease; flex-shrink: 0; }
+  @media (min-width: 480px) { .vote-btn { padding: 6px 16px; } }
+  .vote-btn:hover:not(.voted) { border-color: #ff6b00; color: #ff6b00; background: #fff5ee; }
+  .vote-btn.voted { border-color: #2ecc71; background: #2ecc71; color: #ffffff; box-shadow: 0 2px 8px rgba(46,204,113,0.3); }
+  .vote-arrow { font-size: 16px; font-weight: 900; line-height: 1; display: inline-block; }
   .vote-btn:not(.voted) .vote-arrow { color: #ff6b00; }
-  
   .vote-count { font-size: 12px; }
-
-  @media (min-width: 480px) {
-    .vote-count { font-size: 14px; }
-  }
-
-  .delete-btn {
-    background: #f44336;
-    border: none;
-    border-radius: 6px;
-    padding: 5px 8px;
-    color: #fff;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    text-transform: uppercase;
-    transition: background 0.2s;
-    flex-shrink: 0;
-    height: 26px;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  @media (min-width: 480px) {
-    .delete-btn { border-radius: 8px; padding: 6px 12px; font-size: 11px; height: 32px; }
-  }
-
+  @media (min-width: 480px) { .vote-count { font-size: 14px; } }
+  .delete-btn { background: #f44336; border: none; border-radius: 6px; padding: 5px 8px; color: #fff; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10px; text-transform: uppercase; transition: background 0.2s; flex-shrink: 0; height: 26px; display: inline-flex; align-items: center; }
+  @media (min-width: 480px) { .delete-btn { border-radius: 8px; padding: 6px 12px; font-size: 11px; height: 32px; } }
   .delete-btn:hover { background: #d32f2f; }
-
-  /* EXPLICIT LISTEN BADGE */
-  .listen-badge {
-    background: #ff6b00;
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 10px;
-    padding: 6px 10px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(255,107,0,0.2);
-  }
-
-  @media (min-width: 480px) {
-    .listen-badge { font-size: 11px; padding: 8px 14px; letter-spacing: 1px; }
-  }
-
+  .listen-badge { background: #ff6b00; color: #ffffff; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 10px; padding: 6px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; transition: all 0.2s ease; margin-left: auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(255,107,0,0.2); }
+  @media (min-width: 480px) { .listen-badge { font-size: 11px; padding: 8px 14px; letter-spacing: 1px; } }
   .track-card:hover .listen-badge { background: #e55e00; }
-
-  .listen-badge.open {
-    background: #1a1a2e;
-    color: #ff6b00;
-    border: 1px solid #ff6b00;
-    box-shadow: none;
-  }
-
-  /* SUBMITTER */
-  .submitter-info {
-    padding: 6px 10px;
-    font-size: 10px;
-    color: #888;
-    font-family: 'Open Sans', sans-serif;
-    border-top: 1px solid #f0f0f0;
-    background: #fafafa;
-  }
-
-  @media (min-width: 480px) {
-    .submitter-info { padding: 8px 16px; font-size: 11px; }
-  }
-
-  .submitter-badge {
-    display: inline-block;
-    background: #eef0f2;
-    color: #444;
-    padding: 1px 5px;
-    border-radius: 4px;
-    margin-left: 3px;
-    font-size: 9px;
-    font-weight: 700;
-  }
-
-  @media (min-width: 480px) {
-    .submitter-badge { padding: 2px 7px; margin-left: 5px; font-size: 10px; }
-  }
-
-  /* PLAYER */
-  .player-wrap {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: #0f0f1a;
-  }
-
+  .listen-badge.open { background: #1a1a2e; color: #ff6b00; border: 1px solid #ff6b00; box-shadow: none; }
+  .submitter-info { padding: 6px 10px; font-size: 10px; color: #888; font-family: 'Open Sans', sans-serif; border-top: 1px solid #f0f0f0; background: #fafafa; }
+  @media (min-width: 480px) { .submitter-info { padding: 8px 16px; font-size: 11px; } }
+  .submitter-badge { display: inline-block; background: #eef0f2; color: #444; padding: 1px 5px; border-radius: 4px; margin-left: 3px; font-size: 9px; font-weight: 700; }
+  @media (min-width: 480px) { .submitter-badge { padding: 2px 7px; margin-left: 5px; font-size: 10px; } }
+  .player-wrap { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: #0f0f1a; }
   .track-card.open .player-wrap { max-height: 320px; }
   .player-wrap iframe { width: 100%; border: none; display: block; }
-
-  .player-fallback-box {
-    padding: 12px;
-    background: #252538;
-    text-align: center;
-    border-top: 1px solid rgba(255,107,0,0.2);
-  }
-  
-  .fallback-link-btn {
-    display: inline-block;
-    background: #ff5500;
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    text-transform: uppercase;
-    transition: opacity 0.2s;
-  }
+  .player-fallback-box { padding: 12px; background: #252538; text-align: center; border-top: 1px solid rgba(255,107,0,0.2); }
+  .fallback-link-btn { display: inline-block; background: #ff5500; color: #fff; text-decoration: none; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; padding: 6px 12px; border-radius: 6px; text-transform: uppercase; transition: opacity 0.2s; }
   .fallback-link-btn:hover { opacity: 0.9; }
-
-  .player-error {
-    padding: 14px;
-    text-align: center;
-    font-size: 12px;
-    color: #bbb;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-  }
-
+  .player-error { padding: 14px; text-align: center; font-size: 12px; color: #bbb; font-family: 'Montserrat', sans-serif; font-weight: 600; }
   .player-error a { color: #ff6b00; text-decoration: none; font-weight: 700; }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    color: rgba(255,255,255,0.6);
-    font-size: 10px;
-    margin-top: 24px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255,107,0,0.3);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  @media (min-width: 480px) {
-    footer { font-size: 12px; margin-top: 40px; padding-top: 20px; letter-spacing: 1px; }
-  }
-
-  footer span { color: #ff6b00; }
-  footer p { margin-bottom: 3px; }
+  footer { text-align: center; color: rgba(255,255,255,0.6); font-size: 10px; margin-top: 24px; padding-top: 12px; border-top: 1px solid rgba(255,107,0,0.3); font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 0.5px; }
+  @media (min-width: 480px) { footer { font-size: 12px; margin-top: 40px; padding-top: 20px; letter-spacing: 1px; } }
+  footer span { color: #ff6b00; } footer p { margin-bottom: 3px; }
 </style>
 </head>
 <body>
@@ -686,7 +135,6 @@
 </header>
 
 <div class="container">
-
   <div class="submit-card">
     <div class="submit-heading">🎵 Submit Track</div>
     <div class="form-grid">
@@ -710,33 +158,17 @@
       </div>
     </div>
     <div class="platforms">
-      <span class="plat plat-sc">SC</span>
-      <span class="plat plat-mc">MC</span>
-      <span class="plat plat-yt">YT</span>
-      <span class="plat plat-sp">SP</span>
-      <span class="plat plat-bc">BC</span>
-      <span class="plat plat-dz">DZ</span>
-      <span class="plat plat-am">AM</span>
-      <span class="plat plat-vm">VM</span>
-      <span class="plat plat-tw">TL</span>
+      <span class="plat plat-sc">SC</span><span class="plat plat-mc">MC</span><span class="plat plat-yt">YT</span>
+      <span class="plat plat-sp">SP</span><span class="plat plat-bc">BC</span><span class="plat plat-dz">DZ</span>
+      <span class="plat plat-am">AM</span><span class="plat plat-vm">VM</span><span class="plat plat-tw">TL</span>
     </div>
     <button class="submit-btn" id="submit-btn" onclick="submitTrack()">🚀 Submit</button>
     <div class="form-msg" id="form-msg"></div>
   </div>
 
   <div class="section-title">🔥 Chart</div>
-
-  <div id="chart">
-    <div class="loading">
-      <div class="spinner"></div>
-      Loading...
-    </div>
-  </div>
-
-  <footer>
-    <p>ChatSong Top 40</p>
-    <p>Community Powered 🎵</p>
-  </footer>
+  <div id="chart"><div class="loading"><div class="spinner"></div>Loading...</div></div>
+  <footer><p>ChatSong Top 40</p><p>Community Powered 🎵</p></footer>
 </div>
 
 <script>
@@ -760,113 +192,60 @@ function detectPlatform(url) {
   return 'other';
 }
 
+// FIX: Deze functie lost SoundCloud shortlinks op voordat ze opgeslagen worden
+async function resolveSoundCloudUrl(url) {
+  if (!url.includes('on.soundcloud') && !url.includes('app.goo.gl')) return url;
+  try {
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent('https://soundcloud.com/oembed?url=' + encodeURIComponent(url) + '&format=json')}`;
+    const r = await fetch(proxy);
+    const data = await r.json();
+    const json = JSON.parse(data.contents);
+    const match = json.html.match(/url=([^&"'\s]+)/);
+    return match ? decodeURIComponent(match[1]) : url;
+  } catch(e) { return url; }
+}
+
 function getEmbedUrl(url, platform) {
   try {
     if (platform === 'youtube') {
       let id = '';
       if (url.includes('youtu.be/')) id = url.split('youtu.be/')[1].split('?')[0];
       else if (url.includes('v=')) id = url.split('v=')[1].split('&')[0];
-      // FIX: YouTube begint direct met afspelen (autoplay=1) wanneer je de speler openklapt
       return id ? `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&autoplay=1` : null;
     }
-    if (platform === 'spotify') {
-      const m = url.match(/spotify\.com\/(track|album|playlist|episode)\/([a-zA-Z0-9]+)/);
-      return m ? `https://open.spotify.com/embed/${m[1]}/${m[2]}` : null;
-    }
     if (platform === 'soundcloud') {
-      // FIX: SoundCloud begint direct af te spelen (auto_play=true) wanneer de balk opent
       return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff6b00&auto_play=true&hide_related=true&show_comments=false`;
     }
     if (platform === 'mixcloud') {
       const parts = url.split('mixcloud.com');
-      if (parts[1]) {
-        const path = parts[1].split('?')[0];
-        return `https://www.mixcloud.com/widget/iframe/?feed=${encodeURIComponent(path)}&hide_cover=1&mini=1&autoplay=1`;
-      }
+      if (parts[1]) return `https://www.mixcloud.com/widget/iframe/?feed=${encodeURIComponent(parts[1].split('?')[0])}&hide_cover=1&mini=1&autoplay=1`;
     }
     if (platform === 'deezer') {
       const m = url.match(/deezer\.com\/[a-z]*\/?(track|album|playlist)\/(\d+)/);
       return m ? `https://widget.deezer.com/widget/dark/${m[1]}/${m[2]}?autoplay=true` : null;
     }
-    if (platform === 'apple') {
-      return url.replace('music.apple.com', 'embed.music.apple.com');
-    }
-    if (platform === 'vimeo') {
-      const m = url.match(/vimeo\.com\/(\d+)/);
-      return m ? `https://player.vimeo.com/video/${m[1]}?autoplay=1` : null;
-    }
-    if (platform === 'tidal') {
-      const m = url.match(/tidal\.com\/(?:browse\/)?(track|album|playlist)\/(\d+)/);
-      return m ? `https://embed.tidal.com/${m[1]}s/${m[2]}` : null;
-    }
   } catch(e) {}
   return null;
 }
 
-function getHeight(platform) {
-  if (platform === 'youtube') return 180;
-  if (platform === 'spotify') return 120;
-  if (platform === 'deezer') return 120;
-  if (platform === 'apple') return 150;
-  if (platform === 'vimeo') return 180;
-  if (platform === 'mixcloud') return 120;
-  if (platform === 'tidal') return 120;
-  return 145;
-}
+function getHeight(platform) { return (platform === 'soundcloud' || platform === 'youtube') ? 180 : 120; }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-function esc(s) {
-  return String(s||'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"');
-}
-
-async function fbGet(path) {
-  const r = await fetch(`${DB_URL}/${path}.json`);
-  return r.json();
-}
-
-async function fbPush(path, data) {
-  const r = await fetch(`${DB_URL}/${path}.json`, { method:'POST', body: JSON.stringify(data) });
-  return r.json();
-}
-
-async function fbUpdate(path, data) {
-  await fetch(`${DB_URL}/${path}.json`, { method:'PATCH', body: JSON.stringify(data) });
-}
-
-async function fbDelete(path) {
-  await fetch(`${DB_URL}/${path}.json`, { method:'DELETE' });
-}
+async function fbGet(path) { const r = await fetch(`${DB_URL}/${path}.json`); return r.json(); }
+async function fbPush(path, data) { const r = await fetch(`${DB_URL}/${path}.json`, { method:'POST', body: JSON.stringify(data) }); return r.json(); }
+async function fbUpdate(path, data) { await fetch(`${DB_URL}/${path}.json`, { method:'PATCH', body: JSON.stringify(data) }); }
+async function fbDelete(path) { await fetch(`${DB_URL}/${path}.json`, { method:'DELETE' }); }
 
 async function loadTracks() {
-  try {
-    const data = await fbGet('tracks');
-    tracks = data || {};
-    renderChart();
-  } catch(e) {
-    document.getElementById('chart').innerHTML = `
-      <div class="empty">
-        <div class="empty-icon">⚠️</div>
-        <h3>Connection failed</h3>
-        <p>Please check your network and try again</p>
-      </div>`;
-  }
+  const data = await fbGet('tracks');
+  tracks = data || {};
+  renderChart();
 }
 
 function renderChart() {
   const chart = document.getElementById('chart');
-  const sorted = Object.entries(tracks)
-    .map(([id,t]) => ({id,...t}))
-    .sort((a,b) => (b.votes||0)-(a.votes||0));
-
-  if (!sorted.length) {
-    chart.innerHTML = `
-      <div class="empty">
-        <div class="empty-icon">🎵</div>
-        <h3>No tracks submitted yet</h3>
-        <p>Be the first to share a track!</p>
-      </div>`;
-    return;
-  }
-
+  const sorted = Object.entries(tracks).map(([id,t]) => ({id,...t})).sort((a,b) => (b.votes||0)-(a.votes||0));
+  if (!sorted.length) { chart.innerHTML = '<div class="empty"><h3>Geen nummers</h3></div>'; return; }
   chart.innerHTML = sorted.map((t, i) => {
     const rank = i + 1;
     const rc = rank<=3 ? `top${rank}` : '';
@@ -875,24 +254,6 @@ function renderChart() {
     const voted = myVotes[t.id];
     const platform = t.platform || detectPlatform(t.url);
     const embedUrl = getEmbedUrl(t.url, platform);
-    const h = getHeight(platform);
-    const submitter = t.name || 'Anonymous';
-
-    let playerHtml = '';
-    if (isOpen) {
-      if (embedUrl) {
-        playerHtml = `<iframe src="${embedUrl}" height="${h}" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>`;
-        if (platform === 'soundcloud') {
-          playerHtml += `
-            <div class="player-fallback-box">
-              <a href="${esc(t.url)}" target="_blank" class="fallback-link-btn">🟠 Player hanging? Play on SoundCloud ↗</a>
-            </div>`;
-        }
-      } else {
-        playerHtml = `<div class="player-error">Player unavailable · <a href="${esc(t.url)}" target="_blank">Open directly ↗</a></div>`;
-      }
-    }
-
     return `
       <div class="track-card ${rc} ${isOpen?'open':''}" id="card-${t.id}">
         <div class="track-header" onclick="togglePlayer('${t.id}')">
@@ -910,42 +271,28 @@ function renderChart() {
           </div>
           <div class="listen-badge ${isOpen?'open':''}">${isOpen ? '▼ CLOSE' : '▶ LISTEN'}</div>
         </div>
-        <div class="submitter-info">by <span class="submitter-badge">${esc(submitter)}</span></div>
-        <div class="player-wrap">${playerHtml}</div>
+        <div class="submitter-info">by <span class="submitter-badge">${esc(t.name || 'Anonymous')}</span></div>
+        <div class="player-wrap">${isOpen ? (embedUrl ? `<iframe src="${embedUrl}" height="${getHeight(platform)}" allow="autoplay" allowfullscreen></iframe>` : `<div class="player-error"><a href="${esc(t.url)}" target="_blank">Open link</a></div>`) : ''}</div>
       </div>`;
   }).join('');
 }
 
-function togglePlayer(id) {
-  openId = openId === id ? null : id;
-  renderChart();
-}
+function togglePlayer(id) { openId = openId === id ? null : id; renderChart(); }
 
 async function vote(e, id) {
   e.stopPropagation();
-  if (!tracks[id]) return;
   const wasVoted = myVotes[id];
-  const current = tracks[id].votes || 0;
-  const newVotes = wasVoted ? current - 1 : current + 1;
+  const newVotes = (tracks[id].votes || 0) + (wasVoted ? -1 : 1);
   tracks[id].votes = newVotes;
   if (wasVoted) delete myVotes[id]; else myVotes[id] = 1;
   localStorage.setItem('cs40_votes', JSON.stringify(myVotes));
   renderChart();
-  try { await fbUpdate(`tracks/${id}`, { votes: newVotes }); } catch(e) {}
+  await fbUpdate(`tracks/${id}`, { votes: newVotes });
 }
 
 async function deleteTrack(e, id) {
   e.stopPropagation();
-  if (confirm('Delete this track?')) {
-    try {
-      await fbDelete(`tracks/${id}`);
-      delete tracks[id];
-      renderChart();
-      showMsg('success', '✅ Track deleted successfully!');
-    } catch(e) {
-      showMsg('error', '❌ Delete failed');
-    }
-  }
+  if (confirm('Delete?')) { await fbDelete(`tracks/${id}`); delete tracks[id]; renderChart(); }
 }
 
 async function submitTrack() {
@@ -954,63 +301,24 @@ async function submitTrack() {
   const name = document.getElementById('inp-name').value.trim();
   let url = document.getElementById('inp-url').value.trim();
   const btn = document.getElementById('submit-btn');
-
-  if (!artist || !title || !url) { showMsg('error','⚠️ Please fill in all fields!'); return; }
-
-  // Mobiele share links (app-tekst) automatisch strippen naar een zuivere URL
-  const urlRegex = /(https?:\/\/[^\s]+)/i;
-  const extractedUrl = url.match(urlRegex);
-  if (extractedUrl) { url = extractedUrl[0]; }
-
-  if (!url.startsWith('http')) { showMsg('error','⚠️ Please enter a valid URL!'); return; }
-  if (Object.values(tracks).some(t => t.url === url)) { showMsg('error','⚠️ This track is already added!'); return; }
-
+  if (!artist || !title || !url) { showMsg('error','Vul alles in!'); return; }
+  
   btn.disabled = true;
-  btn.textContent = 'Sending...';
+  btn.textContent = 'Verwerken...';
 
-  try {
-    let platform = detectPlatform(url);
+  // FIX: Resolve Shortlink
+  let platform = detectPlatform(url);
+  if (platform === 'soundcloud') { url = await resolveSoundCloudUrl(url); }
 
-    // FIX: CORS veilige SoundCloud Shortlink Bypass. 
-    // Praat via een veilige proxy met SC zodat on.soundcloud of app.goo.gl 100% correct door je formulier gaat!
-    if (platform === 'soundcloud' && (url.includes('on.soundcloud.com') || url.includes('soundcloud.app.goo.gl'))) {
-      try {
-        const oembedUrl = `https://soundcloud.com/oembed?url=${encodeURIComponent(url)}&format=json`;
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(oembedUrl)}`;
-        
-        const response = await fetch(proxyUrl);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.contents) {
-            const oembedData = JSON.parse(data.contents);
-            if (oembedData.html) {
-              const trackUrlMatch = oembedData.html.match(/url=([^&"'\s]+)/);
-              if (trackUrlMatch && trackUrlMatch[1]) {
-                url = decodeURIComponent(trackUrlMatch[1]);
-              }
-            }
-          }
-        }
-      } catch (err) {
-        console.log("SoundCloud API shortlink bypass failed, falling back", err);
-      }
-    }
-
-    const result = await fbPush('tracks', { artist, title, name: name || 'Anonymous', url, platform, votes: 0, submitted: Date.now() });
-    tracks[result.name] = { artist, title, name: name || 'Anonymous', url, platform, votes: 0 };
-    
-    document.getElementById('inp-artist').value = '';
-    document.getElementById('inp-title').value = '';
-    document.getElementById('inp-name').value = '';
-    document.getElementById('inp-url').value = '';
-    showMsg('success', `✅ Track added successfully!`);
-    renderChart();
-  } catch(e) {
-    showMsg('error','❌ Submission failed, please try again');
-  }
-
+  const result = await fbPush('tracks', { artist, title, name: name || 'Anonymous', url, platform, votes: 0 });
+  tracks[result.name] = { artist, title, name: name || 'Anonymous', url, platform, votes: 0 };
+  
+  document.getElementById('inp-artist').value = '';
+  document.getElementById('inp-title').value = '';
+  document.getElementById('inp-url').value = '';
   btn.disabled = false;
   btn.textContent = '🚀 Submit';
+  renderChart();
 }
 
 function showMsg(type, text) {
@@ -1022,15 +330,11 @@ function showMsg(type, text) {
 }
 
 setInterval(async () => {
-  try {
-    const data = await fbGet('tracks');
-    if (data) { tracks = data; renderChart(); }
-  } catch(e) {}
+  const data = await fbGet('tracks');
+  if (data && JSON.stringify(data) !== JSON.stringify(tracks)) { tracks = data; renderChart(); }
 }, 15000);
 
 loadTracks();
 </script>
 </body>
 </html>
-
-```
