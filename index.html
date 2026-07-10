@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,6 +223,10 @@
   .plat-am { background: #fc3c44; color: #fff; }
   .plat-vm { background: #1ab7ea; color: #fff; }
   .plat-tw { background: #000000; color: #fff; }
+  .plat-mc { background: #5000ff; color: #fff; }
+  .plat-td { background: #000000; color: #fff; }
+  .plat-ak { background: #ff6600; color: #fff; }
+  .plat-bp { background: #94d500; color: #1a1a2e; }
 
   .submit-btn {
     width: 100%;
@@ -459,6 +462,24 @@
     .track-artist { font-size: 12px; margin-bottom: 5px; }
   }
 
+  /* PLATFORM BADGE */
+  .platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+  }
+
+  @media (min-width: 480px) {
+    .platform-badge { font-size: 10px; padding: 2px 6px; margin-bottom: 5px; }
+  }
+
   /* BUTTONS ROW */
   .buttons-row {
     display: flex;
@@ -592,7 +613,7 @@
     background: #f8f8f8;
   }
 
-  .track-card.open .player-wrap { max-height: 280px; }
+  .track-card.open .player-wrap { max-height: 320px; }
   .player-wrap iframe { width: 100%; border: none; display: block; }
 
   .player-error {
@@ -609,6 +630,23 @@
   }
 
   .player-error a { color: #ff6b00; text-decoration: none; font-weight: 700; }
+
+  .open-link-btn {
+    display: inline-block;
+    background: #ff6b00;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 6px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  @media (min-width: 480px) {
+    .open-link-btn { padding: 8px 16px; font-size: 13px; margin-top: 8px; }
+  }
 
   /* FOOTER */
   footer {
@@ -679,6 +717,10 @@
       <span class="plat plat-am">AM</span>
       <span class="plat plat-vm">VM</span>
       <span class="plat plat-tw">TL</span>
+      <span class="plat plat-mc">MC</span>
+      <span class="plat plat-td">TD</span>
+      <span class="plat plat-ak">AK</span>
+      <span class="plat plat-bp">BP</span>
     </div>
     <button class="submit-btn" id="submit-btn" onclick="submitTrack()">🚀 Submit</button>
     <div class="form-msg" id="form-msg"></div>
@@ -705,6 +747,7 @@ let tracks = {};
 let openId = null;
 let myVotes = JSON.parse(localStorage.getItem('cs40_votes') || '{}');
 
+// ─── PLATFORM DETECTION ───
 function detectPlatform(url) {
   if (!url) return 'other';
   const u = url.toLowerCase();
@@ -716,9 +759,32 @@ function detectPlatform(url) {
   if (u.includes('music.apple.com')) return 'apple';
   if (u.includes('vimeo.com')) return 'vimeo';
   if (u.includes('tidal.com')) return 'tidal';
+  if (u.includes('mixcloud.com')) return 'mixcloud';
+  if (u.includes('audiomack.com')) return 'audiomack';
+  if (u.includes('beatport.com')) return 'beatport';
   return 'other';
 }
 
+// ─── PLATFORM STYLING ───
+function getPlatformStyle(platform) {
+  const styles = {
+    soundcloud: { bg: '#ff5500', label: 'SoundCloud' },
+    youtube:    { bg: '#ff0000', label: 'YouTube' },
+    spotify:    { bg: '#1db954', label: 'Spotify' },
+    bandcamp:   { bg: '#1da0c3', label: 'Bandcamp' },
+    deezer:     { bg: '#a238ff', label: 'Deezer' },
+    apple:      { bg: '#fc3c44', label: 'Apple Music' },
+    vimeo:      { bg: '#1ab7ea', label: 'Vimeo' },
+    tidal:      { bg: '#000000', label: 'TIDAL' },
+    mixcloud:   { bg: '#5000ff', label: 'Mixcloud' },
+    audiomack:  { bg: '#ff6600', label: 'Audiomack' },
+    beatport:   { bg: '#94d500', label: 'Beatport', text: '#1a1a2e' },
+    other:      { bg: '#888888', label: 'Link' }
+  };
+  return styles[platform] || styles.other;
+}
+
+// ─── EMBED URL GENERATORS ───
 function getEmbedUrl(url, platform) {
   try {
     if (platform === 'youtube') {
@@ -732,29 +798,57 @@ function getEmbedUrl(url, platform) {
       return m ? `https://open.spotify.com/embed/${m[1]}/${m[2]}` : null;
     }
     if (platform === 'soundcloud') {
-      return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff6b00&auto_play=false&hide_related=true&show_comments=false`;
+      // Use visual=true for better mobile compatibility + hide related to reduce clutter
+      return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff6b00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
     }
     if (platform === 'deezer') {
       const m = url.match(/deezer\.com\/[a-z]+\/(track|album|playlist)\/(\d+)/);
       return m ? `https://widget.deezer.com/widget/dark/${m[1]}/${m[2]}` : null;
     }
     if (platform === 'apple') {
-      return url.replace('music.apple.com', 'embed.music.apple.com');
+      // Apple Music embed: replace domain + add theme
+      return url.replace('music.apple.com', 'embed.music.apple.com') + (url.includes('?') ? '&' : '?') + 'theme=dark';
     }
     if (platform === 'vimeo') {
       const m = url.match(/vimeo\.com\/(\d+)/);
       return m ? `https://player.vimeo.com/video/${m[1]}` : null;
     }
+    if (platform === 'tidal') {
+      // TIDAL embed: extract ID and type from URL
+      const m = url.match(/tidal\.com\/(?:browse\/)?(track|album|playlist|video)\/([a-zA-Z0-9-]+)/i);
+      if (m) {
+        const typeMap = { track: 't', album: 'a', playlist: 'p', video: 'v' };
+        return `https://embed.tidal.com/${m[1]}s/${m[2]}`;
+      }
+      return null;
+    }
+    if (platform === 'mixcloud') {
+      // Mixcloud widget iframe
+      return `https://www.mixcloud.com/widget/iframe/?feed=${encodeURIComponent(url)}&hide_cover=1&mini=1&light=0`;
+    }
+    if (platform === 'audiomack') {
+      // Audiomack oEmbed
+      const m = url.match(/audiomack\.com\/song\/([^\/]+)\/([^\/\?]+)/i);
+      return m ? `https://audiomack.com/embed/song/${m[1]}/${m[2]}?background=1` : null;
+    }
+    if (platform === 'beatport') {
+      // Beatport has no embed, return null so fallback link shows
+      return null;
+    }
   } catch(e) {}
   return null;
 }
 
+// ─── PLAYER HEIGHTS ───
 function getHeight(platform) {
   if (platform === 'youtube') return 160;
   if (platform === 'spotify') return 120;
   if (platform === 'deezer') return 120;
   if (platform === 'apple') return 120;
   if (platform === 'vimeo') return 160;
+  if (platform === 'tidal') return 120;
+  if (platform === 'mixcloud') return 60; // Mixcloud mini widget is compact
+  if (platform === 'audiomack') return 120;
   return 140;
 }
 
@@ -821,18 +915,32 @@ function renderChart() {
     const embedUrl = getEmbedUrl(t.url, platform);
     const h = getHeight(platform);
     const submitter = t.name || 'Anonymous';
+    const pStyle = getPlatformStyle(platform);
 
-    const playerHtml = isOpen
-      ? (embedUrl
-          ? `<iframe src="${embedUrl}" height="${h}" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>`
-          : `<div class="player-error">Player unavailable · <a href="${esc(t.url)}" target="_blank">Open ↗</a></div>`)
-      : '';
+    // Build player HTML with fallback for all platforms
+    let playerHtml = '';
+    if (isOpen) {
+      if (embedUrl) {
+        playerHtml = `<iframe src="${embedUrl}" height="${h}" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>`;
+      }
+      // Always add a fallback "Open in [Platform]" link below the embed
+      // For SoundCloud specifically, add extra mobile hint
+      const mobileHint = (platform === 'soundcloud') 
+        ? `<div style="font-size:10px;color:#999;padding:4px 10px 0;font-family:Montserrat,sans-serif;">💡 Doesn't play? Tap "Open in SoundCloud" below</div>` 
+        : '';
+      playerHtml += mobileHint;
+      playerHtml += `
+        <div style="padding:8px 10px;text-align:center;background:#fff;">
+          <a href="${esc(t.url)}" target="_blank" class="open-link-btn">▶ Open in ${pStyle.label}</a>
+        </div>`;
+    }
 
     return `
       <div class="track-card ${rc} ${isOpen?'open':''}" id="card-${t.id}">
         <div class="track-header" onclick="togglePlayer('${t.id}')">
           <div class="rank ${rb}">#${rank}</div>
           <div class="track-info">
+            <div class="platform-badge" style="background:${pStyle.bg};color:${pStyle.text||'#fff'}">${pStyle.label}</div>
             <div class="track-title">${esc(t.title)}</div>
             <div class="track-artist">${esc(t.artist)}</div>
             <div class="buttons-row">
