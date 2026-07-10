@@ -216,6 +216,7 @@
   }
 
   .plat-sc { background: #ff5500; color: #fff; }
+  .plat-mc { background: #00aee6; color: #fff; }
   .plat-yt { background: #ff0000; color: #fff; }
   .plat-sp { background: #1db954; color: #fff; }
   .plat-bc { background: #1da0c3; color: #fff; }
@@ -671,6 +672,7 @@
     </div>
     <div class="platforms">
       <span class="plat plat-sc">SC</span>
+      <span class="plat plat-mc">MC</span>
       <span class="plat plat-yt">YT</span>
       <span class="plat plat-sp">SP</span>
       <span class="plat plat-bc">BC</span>
@@ -707,7 +709,8 @@ let myVotes = JSON.parse(localStorage.getItem('cs40_votes') || '{}');
 function detectPlatform(url) {
   if (!url) return 'other';
   const u = url.toLowerCase();
-  if (u.includes('soundcloud.com')) return 'soundcloud';
+  if (u.includes('soundcloud.com') || u.includes('soundcloud.app.goo.gl')) return 'soundcloud';
+  if (u.includes('mixcloud.com')) return 'mixcloud';
   if (u.includes('youtube.com') || u.includes('youtu.be')) return 'youtube';
   if (u.includes('spotify.com')) return 'spotify';
   if (u.includes('bandcamp.com')) return 'bandcamp';
@@ -733,8 +736,15 @@ function getEmbedUrl(url, platform) {
     if (platform === 'soundcloud') {
       return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff6b00&auto_play=false&hide_related=true&show_comments=false`;
     }
+    if (platform === 'mixcloud') {
+      const parts = url.split('mixcloud.com');
+      if (parts[1]) {
+        const path = parts[1].split('?')[0];
+        return `https://www.mixcloud.com/widget/iframe/?feed=${encodeURIComponent(path)}&hide_cover=1&mini=1`;
+      }
+    }
     if (platform === 'deezer') {
-      const m = url.match(/deezer\.com\/[a-z]+\/(track|album|playlist)\/(\d+)/);
+      const m = url.match(/deezer\.com\/[a-z]*\/?(track|album|playlist)\/(\d+)/);
       return m ? `https://widget.deezer.com/widget/dark/${m[1]}/${m[2]}` : null;
     }
     if (platform === 'apple') {
@@ -743,6 +753,10 @@ function getEmbedUrl(url, platform) {
     if (platform === 'vimeo') {
       const m = url.match(/vimeo\.com\/(\d+)/);
       return m ? `https://player.vimeo.com/video/${m[1]}` : null;
+    }
+    if (platform === 'tidal') {
+      const m = url.match(/tidal\.com\/(?:browse\/)?(track|album|playlist)\/(\d+)/);
+      return m ? `https://embed.tidal.com/${m[1]}s/${m[2]}` : null;
     }
   } catch(e) {}
   return null;
@@ -754,6 +768,8 @@ function getHeight(platform) {
   if (platform === 'deezer') return 120;
   if (platform === 'apple') return 120;
   if (platform === 'vimeo') return 160;
+  if (platform === 'mixcloud') return 120;
+  if (platform === 'tidal') return 120;
   return 140;
 }
 
@@ -886,10 +902,18 @@ async function submitTrack() {
   const artist = document.getElementById('inp-artist').value.trim();
   const title = document.getElementById('inp-title').value.trim();
   const name = document.getElementById('inp-name').value.trim();
-  const url = document.getElementById('inp-url').value.trim();
+  let url = document.getElementById('inp-url').value.trim();
   const btn = document.getElementById('submit-btn');
 
   if (!artist || !title || !url) { showMsg('error','⚠️ Fill all fields!'); return; }
+
+  // Filter de pure URL uit eventuele meegekopieerde app-teksten
+  const urlRegex = /(https?:\/\/[^\s]+)/i;
+  const extractedUrl = url.match(urlRegex);
+  if (extractedUrl) {
+    url = extractedUrl[0];
+  }
+
   if (!url.startsWith('http')) { showMsg('error','⚠️ Valid URL needed!'); return; }
   if (Object.values(tracks).some(t => t.url === url)) { showMsg('error','⚠️ Already added!'); return; }
 
@@ -897,9 +921,29 @@ async function submitTrack() {
   btn.textContent = 'Sending...';
 
   try {
-    const platform = detectPlatform(url);
+    let platform = detectPlatform(url);
+
+    // FIX: Als het een on.soundcloud mobiele shortlink is, halen we direct de werkende embed-stroom op via de SoundCloud API vóór het opslaan!
+    if (platform === 'soundcloud' && (url.includes('on.soundcloud.com') || url.includes('soundcloud.app.goo.gl'))) {
+      try {
+        const response = await fetch(`https://soundcloud.com/oembed?url=${encodeURIComponent(url)}&format=json`);
+        if (response.ok) {
+          const oembedData = await response.json();
+          if (oembedData.html) {
+            const trackUrlMatch = oembedData.html.match(/url=([^&"'\s]+)/);
+            if (trackUrlMatch && trackUrlMatch[1]) {
+              url = decodeURIComponent(trackUrlMatch[1]); // Wordt omgezet naar een direct afspeelbare api.soundcloud.com link
+            }
+          }
+        }
+      } catch (oembedErr) {
+        console.log("SoundCloud shortlink resolve failed, fallback to raw url", oembedErr);
+      }
+    }
+
     const result = await fbPush('tracks', { artist, title, name: name || 'Anonymous', url, platform, votes: 0, submitted: Date.now() });
     tracks[result.name] = { artist, title, name: name || 'Anonymous', url, platform, votes: 0 };
+    
     document.getElementById('inp-artist').value = '';
     document.getElementById('inp-title').value = '';
     document.getElementById('inp-name').value = '';
@@ -918,6 +962,7 @@ function showMsg(type, text) {
   const m = document.getElementById('form-msg');
   m.className = `form-msg ${type}`;
   m.textContent = text;
+  m.style.display = 'block';
   setTimeout(() => { m.style.display='none'; }, 4000);
 }
 
